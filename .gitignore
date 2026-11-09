@@ -1,0 +1,45 @@
+# Environment
+.env
+.env.local
+
+# Data lokal
+.data/
+
+# Go
+backend/bin/
+backend/tmp/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Generated (tetap dikomit, tapi jangan edit manual)
+# backend/openapi.json
+# backend/internal/db/gen/
+# frontend/src/types/api.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker (tidak boleh ada)
+Dockerfile
+docker-compose*.yml
+.devcontainer/
+
+# scripts
+scripts/
+
+# reference
+reference/
+
+# stitch
+stitch/

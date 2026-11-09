@@ -1,0 +1,42 @@
+{
+  "name": "uhui-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "gen:api": "openapi-typescript ../backend/openapi.json -o src/types/api.d.ts"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^4.9.0",
+    "@tanstack/react-query": "^5.105.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.64.0",
+    "next": "^15",
+    "openapi-fetch": "^0.17.0",
+    "qrcode": "^1.5.4",
+    "react": "^19",
+    "react-dom": "^19",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "zustand": "^5.0.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^15",
+    "openapi-typescript": "^7",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  }
+}

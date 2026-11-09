@@ -1,0 +1,38 @@
+linters-settings:
+  funlen:
+    lines: 60
+    statements: 40
+  gocyclo:
+    min-complexity: 12
+  govet:
+    enable-all: true
+  unused:
+    field-writes-are-uses: false
+  revive:
+    rules:
+      - name: unexported-return
+        disabled: true
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - staticcheck
+    - unused
+    - funlen
+    - gocyclo
+    - gosimple
+    - ineffassign
+    - typecheck
+
+issues:
+  exclude-dirs:
+    - internal/db/gen
+  exclude-files:
+    - ".*_test\\.go"
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+run:
+  timeout: 5m
+

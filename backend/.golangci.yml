@@ -1,0 +1,42 @@
+version: "2"
+linters:
+  enable:
+    - funlen
+    - gocyclo
+  settings:
+    funlen:
+      lines: 60
+      statements: 40
+    gocyclo:
+      min-complexity: 12
+    govet:
+      enable-all: true
+    revive:
+      rules:
+        - name: unexported-return
+          disabled: true
+    unused:
+      field-writes-are-uses: false
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - .*_test\.go
+      - internal/db/gen
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
