@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ArrowLeft, MessageSquare, Send, CheckCircle2, XCircle } from "lucide-react";
 import { useThreadComments } from "@/hooks/use-hub";
 import { useCreateBoardroomComment } from "@/hooks/use-bursa-trading";
+import { formatUserRole } from "@/lib/roles";
 
 export interface BoardroomThreadItem {
   id: string;
@@ -67,7 +68,7 @@ export function BoardroomDetailPane({
           <div className="min-w-0">
             <h3 className="font-bold text-sm text-slate-900 dark:text-white truncate">{thread.title}</h3>
             <p className="text-[11px] text-slate-400 truncate">
-              {thread.author_name} ({thread.author_role === "sme_owner" ? "Pemilik Usaha" : "Investor"}) • {new Date(thread.created_at).toLocaleDateString("id-ID", { dateStyle: "long" })}
+              {thread.author_name} ({formatUserRole(thread.author_role)}) • {new Date(thread.created_at).toLocaleDateString("id-ID", { dateStyle: "long" })}
             </p>
           </div>
         </div>
@@ -98,7 +99,7 @@ export function BoardroomDetailPane({
             commentList.map((c) => (
               <div key={c.id} className="p-3.5 rounded-xl bg-white dark:bg-slate-900/40 border border-slate-100 dark:border-white/[0.05] space-y-1 text-xs">
                 <div className="flex justify-between items-center text-[10px] text-slate-400">
-                  <span className="font-bold text-slate-800 dark:text-slate-200">{c.author_name} ({c.author_role})</span>
+                  <span className="font-bold text-slate-800 dark:text-slate-200">{c.author_name} ({formatUserRole(c.author_role)})</span>
                   <span>{new Date(c.created_at).toLocaleDateString("id-ID", { dateStyle: "short" })}</span>
                 </div>
                 <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{c.content}</p>
@@ -116,12 +117,12 @@ export function BoardroomDetailPane({
               value={replyText}
               onChange={(e) => setReplyText(e.target.value)}
               placeholder="Tulis tanggapan atau masukan untuk agenda ini..."
-              className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1D5FAE]"
             />
             <button
               type="submit"
               disabled={createComment.isPending || !replyText.trim()}
-              className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50 shrink-0"
+              className="bg-[#1D5FAE] hover:bg-[#184e91] text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition disabled:opacity-50 shrink-0"
             >
               <Send className="h-3.5 w-3.5" />
               <span>Kirim</span>

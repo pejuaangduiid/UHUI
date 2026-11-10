@@ -230,12 +230,28 @@ func (s *Service) CreateComment(ctx context.Context, threadID, authorID uuid.UUI
 	}
 
 	author, _ := s.q.GetUserByID(ctx, c.AuthorID)
+	authorRole := string(author.Role)
+	if author.Role == "admin" || author.Role == "superadmin" {
+		authorRole = "admin"
+	} else if r.Visibility == "private_boardroom" {
+		if r.SmeID.Valid {
+			sme, err := s.q.GetSMEByID(ctx, r.SmeID)
+			if err == nil && sme.OwnerID == c.AuthorID {
+				authorRole = "sme_owner"
+			} else {
+				authorRole = "investor"
+			}
+		} else {
+			authorRole = "investor"
+		}
+	}
+
 	return &CommentDTO{
 		ID:         uuid.UUID(c.ID.Bytes).String(),
 		ThreadID:   uuid.UUID(c.ThreadID.Bytes).String(),
 		AuthorID:   uuid.UUID(c.AuthorID.Bytes).String(),
 		AuthorName: author.FullName,
-		AuthorRole: string(author.Role),
+		AuthorRole: authorRole,
 		Content:    c.Content,
 		CreatedAt:  c.CreatedAt.Time,
 	}, nil

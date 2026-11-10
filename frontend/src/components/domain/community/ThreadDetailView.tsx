@@ -7,6 +7,7 @@ import { CommentList } from "./CommentList";
 import { useThreadComments, useCreateComment } from "@/hooks/use-hub";
 import { useSession } from "@/hooks/use-session";
 import { useAdminCommunity } from "@/hooks/use-admin-community";
+import { formatUserRole } from "@/lib/roles";
 import type { components } from "@/types/api";
 
 type Thread = components["schemas"]["ThreadDTO"];
@@ -60,7 +61,7 @@ export function ThreadDetailView({
           <div className="flex items-center gap-2">
             <span className="font-bold text-slate-900 dark:text-white">{thread.author_name}</span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-semibold">
-              {thread.author_role}
+              {formatUserRole(thread.author_role)}
             </span>
             {thread.group_name ? (
               <button

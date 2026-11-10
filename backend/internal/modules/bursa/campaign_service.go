@@ -27,13 +27,15 @@ func NewCampaignService(_ *pgxpool.Pool, q *gen.Queries) *CampaignService {
 }
 
 type CreateCampaignReq struct {
-	ClosesAt         time.Time `json:"closes_at"`
-	Title            string    `json:"title"`
-	Scheme           string    `json:"scheme"`
-	TargetAmountIDR  int64     `json:"target_amount_idr"`
-	MinInvestmentIDR int64     `json:"min_investment_idr"`
-	ReturnShareBps   int16     `json:"return_share_bps"`
-	TermMonths       int16     `json:"term_months"`
+	ClosesAt          time.Time `json:"closes_at"`
+	Title             string    `json:"title"`
+	Scheme            string    `json:"scheme"`
+	TargetAmountIDR   int64     `json:"target_amount_idr"`
+	MinInvestmentIDR  int64     `json:"min_investment_idr"`
+	ReturnShareBps    int16     `json:"return_share_bps"`
+	TermMonths        int16     `json:"term_months"`
+	SCFPartnerID      *string   `json:"scf_partner_id,omitempty"`
+	OJKRegisteredCode *string   `json:"ojk_registered_code,omitempty"`
 }
 
 func (s *CampaignService) validateCreateReq(ctx context.Context, smeID uuid.UUID, req CreateCampaignReq) error {
@@ -114,16 +116,28 @@ func (s *CampaignService) CreateCampaign(ctx context.Context, smeID uuid.UUID, r
 	}
 
 	slug := generateCampaignSlug(req.Title)
+	var scfPartnerUUID pgtype.UUID
+	if req.SCFPartnerID != nil && *req.SCFPartnerID != "" {
+		if u, err := uuid.Parse(*req.SCFPartnerID); err == nil {
+			scfPartnerUUID = pgtype.UUID{Bytes: u, Valid: true}
+		}
+	}
+	var ojkCodeText pgtype.Text
+	if req.OJKRegisteredCode != nil && *req.OJKRegisteredCode != "" {
+		ojkCodeText = pgtype.Text{String: *req.OJKRegisteredCode, Valid: true}
+	}
 	camp, err := s.q.CreateCampaign(ctx, gen.CreateCampaignParams{
-		SmeID:            pgtype.UUID{Bytes: smeID, Valid: true},
-		Slug:             slug,
-		Title:            req.Title,
-		Scheme:           gen.FundingScheme(req.Scheme),
-		TargetAmountIdr:  req.TargetAmountIDR,
-		MinInvestmentIdr: req.MinInvestmentIDR,
-		ReturnShareBps:   req.ReturnShareBps,
-		TermMonths:       req.TermMonths,
-		ClosesAt:         pgtype.Timestamptz{Time: req.ClosesAt, Valid: true},
+		SmeID:             pgtype.UUID{Bytes: smeID, Valid: true},
+		Slug:              slug,
+		Title:             req.Title,
+		Scheme:            gen.FundingScheme(req.Scheme),
+		TargetAmountIdr:   req.TargetAmountIDR,
+		MinInvestmentIdr:  req.MinInvestmentIDR,
+		ReturnShareBps:    req.ReturnShareBps,
+		TermMonths:        req.TermMonths,
+		ClosesAt:          pgtype.Timestamptz{Time: req.ClosesAt, Valid: true},
+		ScfPartnerID:      scfPartnerUUID,
+		OjkRegisteredCode: ojkCodeText,
 	})
 	if err != nil {
 		return nil, apperr.Internal("Gagal membuat kampanye: " + err.Error())
@@ -254,6 +268,13 @@ func toCampaignDTO(c gen.BursaCampaign) *CampaignDTO {
 	}
 	if c.FundedAt.Valid {
 		dto.FundedAt = &c.FundedAt.Time
+	}
+	if c.ScfPartnerID.Valid {
+		idStr := uuid.UUID(c.ScfPartnerID.Bytes).String()
+		dto.SCFPartnerID = &idStr
+	}
+	if c.OjkRegisteredCode.Valid && c.OjkRegisteredCode.String != "" {
+		dto.OJKRegisteredCode = &c.OjkRegisteredCode.String
 	}
 	return dto
 }

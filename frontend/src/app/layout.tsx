@@ -10,13 +10,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "UHUI — Ekosistem Terpadu Keuangan UMKM & Bursa Mikro-Ekuitas",
+  title: "UHUI - Ekosistem Terpadu Keuangan UMKM & Bursa Mikro-Ekuitas",
   description:
     "Aplikasi pembukuan standar SAK EMKM, kasir POS, ruang rapat investor privat, dan bursa valuasi saham transparan UMKM Indonesia.",
   keywords: ["UMKM", "SAK EMKM", "Kasir POS", "Bursa Saham UMKM", "Pembukuan", "Digitalisasi UMKM", "UHUI"],
   authors: [{ name: "UHUI Platform Team" }],
   openGraph: {
-    title: "UHUI — Ekosistem Terpadu Keuangan UMKM",
+    title: "UHUI - Ekosistem Terpadu Keuangan UMKM",
     description: "Platform pembukuan SAK EMKM, kasir POS, dan bursa mikro-ekuitas UMKM.",
     type: "website",
     locale: "id_ID",

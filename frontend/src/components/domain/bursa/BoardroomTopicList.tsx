@@ -37,7 +37,7 @@ export function BoardroomTopicList({
             type="button"
             onClick={() => onSelect(t.id)}
             className={`w-full text-left p-3.5 rounded-2xl border transition-all ${isSelected
-                ? "border-blue-500 bg-blue-50/70 dark:bg-blue-950/40 shadow-sm ring-1 ring-blue-500/30"
+                ? "border-[#1D5FAE] bg-[#DFE9F1]/50 dark:bg-blue-950/40 shadow-sm ring-1 ring-[#1D5FAE]/30"
                 : "border-slate-200 bg-white hover:border-slate-300 dark:border-white/[0.08] dark:bg-[#121827] dark:hover:border-white/20"
               }`}
           >
@@ -60,23 +60,23 @@ export function BoardroomTopicList({
 
             <div className="flex items-center justify-between text-[10px] pt-1 border-t border-slate-100 dark:border-white/[0.06]">
               <span className="inline-flex items-center gap-1 text-slate-500 dark:text-slate-400 font-medium">
-                <MessageSquare className="h-3 w-3 text-blue-500" />
+                <MessageSquare className="h-3 w-3 text-[#1D5FAE]" />
                 <span>{t.comment_count} Tanggapan</span>
               </span>
 
               <span
                 className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-semibold border ${isClosed
-                    ? "bg-slate-500/10 text-slate-400 border-slate-500/20"
-                    : "bg-blue-500/10 text-blue-500 border-blue-500/20"
+                  ? "bg-slate-500/10 text-slate-400 border-slate-500/20"
+                    : "bg-[#DFE9F1] text-[#1D5FAE] border-[#B9C8DD]"
                   }`}
               >
-                {isClosed ? <XCircle className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}
-                <span>{isClosed ? "Ditutup" : "Aktif"}</span>
-              </span>
-            </div>
+              {isClosed ? <XCircle className="h-2.5 w-2.5" /> : <CheckCircle2 className="h-2.5 w-2.5" />}
+              <span>{isClosed ? "Ditutup" : "Aktif"}</span>
+            </span>
+          </div>
           </button>
-        );
-      })}
-    </div>
+  );
+})}
+    </div >
   );
 }

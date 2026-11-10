@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Bell, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Sidebar } from "./Sidebar";
 import { BottomNav } from "./BottomNav";
 import { ThemeToggle } from "./ThemeToggle";
@@ -57,14 +57,6 @@ export function AppShell({ children }: AppShellProps) {
 
           <div className="flex items-center gap-2.5 sm:gap-3">
             <WalletBadge />
-            <button
-              type="button"
-              aria-label="Notifikasi"
-              className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[#E2E7EB] bg-white text-[#516072] shadow-xs transition hover:bg-[#F4F3F1] dark:border-white/[0.08] dark:bg-[#132235] dark:text-slate-300"
-            >
-              <Bell className="h-4 w-4" />
-              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#1D5FAE] ring-2 ring-white dark:ring-[#0D1C2C]" />
-            </button>
             <ThemeToggle />
             {user ? (
               <ProfileDropdown user={user} role={role} dashboardHref={role === "investor" ? "/invest" : "/sme"} onLogout={logout} />

@@ -212,6 +212,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/ojk/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Trigger sync of OJK registered apps and illegal entities from upstream */
+        post: operations["ojkSyncUpstream"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/review-queue": {
         parameters: {
             query?: never;
@@ -238,6 +255,23 @@ export interface paths {
         };
         /** List all registered SMEs with suspension status */
         get: operations["adminListSMEs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/smes/{id}/ojk-screening": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Audit and screen SME against OJK illegal entity blacklist */
+        get: operations["ojkScreenSME"];
         put?: never;
         post?: never;
         delete?: never;
@@ -842,6 +876,40 @@ export interface paths {
         };
         /** Get current investor portfolio */
         get: operations["mePortfolio"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ojk/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Check entity legality against OJK registered & illegal entities */
+        get: operations["ojkCheckEntity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ojk/scf-partners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get official OJK licensed Securities Crowdfunding partners */
+        get: operations["ojkGetSCFPartners"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1683,6 +1751,7 @@ export interface components {
             id: string;
             /** Format: int64 */
             min_investment_idr: number;
+            ojk_registered_code?: string;
             /** Format: int64 */
             raised_amount_idr: number;
             readiness_score_id?: string;
@@ -1690,6 +1759,7 @@ export interface components {
             return_share_bps: number;
             review_note?: string;
             reviewed_by?: string;
+            scf_partner_id?: string;
             scheme: string;
             slug: string;
             sme_id: string;
@@ -1954,8 +2024,10 @@ export interface components {
             closes_at: string;
             /** Format: int64 */
             min_investment_idr: number;
+            ojk_registered_code?: string;
             /** Format: int32 */
             return_share_bps: number;
+            scf_partner_id?: string;
             scheme: string;
             /** Format: int64 */
             target_amount_idr: number;
@@ -2191,6 +2263,12 @@ export interface components {
              */
             status: string;
         };
+        IllegalEntityDTO: {
+            activity_type: string;
+            entity_name: string;
+            id: string;
+            suspicion_notes: string;
+        };
         Int2: {
             /** Format: int32 */
             Int16: number;
@@ -2340,6 +2418,22 @@ export interface components {
             sme_id?: string;
             user: components["schemas"]["UserDTO"];
         };
+        OJKCheckResultDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             * @example https://example.com/schemas/OJKCheckResultDTO.json
+             */
+            readonly $schema?: string;
+            data_source: string;
+            disclaimer: string;
+            illegal_matches: components["schemas"]["IllegalEntityDTO"][] | null;
+            licensed_matches: components["schemas"]["SCFPartnerDTO"][] | null;
+            query: string;
+            status: string;
+            /** Format: int64 */
+            total_matches: number;
+        };
         PortfolioItemDTO: {
             /** Format: int64 */
             amount_idr: number;
@@ -2400,10 +2494,15 @@ export interface components {
             latest_readiness_score: number;
             /** Format: int64 */
             min_investment_idr: number;
+            ojk_registered_code?: string;
             /** Format: int64 */
             raised_amount_idr: number;
             /** Format: int32 */
             return_share_bps: number;
+            scf_license_number?: string;
+            scf_partner_id?: string;
+            scf_partner_name?: string;
+            scf_website_url?: string;
             scheme: string;
             sector: string;
             slug: string;
@@ -2431,10 +2530,15 @@ export interface components {
             latest_readiness_score: number;
             /** Format: int64 */
             min_investment_idr: number;
+            ojk_registered_code?: string;
             /** Format: int64 */
             raised_amount_idr: number;
             /** Format: int32 */
             return_share_bps: number;
+            scf_license_number?: string;
+            scf_partner_id?: string;
+            scf_partner_name?: string;
+            scf_website_url?: string;
             scheme: string;
             sector: string;
             slug: string;
@@ -2584,6 +2688,15 @@ export interface components {
             /** @description Review decision: approved or rejected */
             status: string;
         };
+        SCFPartnerDTO: {
+            brand_name: string;
+            entity_name: string;
+            entity_type: string;
+            id: string;
+            is_active: boolean;
+            license_number: string;
+            website_url: string;
+        };
         SMEAdminDTO: {
             business_name: string;
             /** Format: date-time */
@@ -2601,6 +2714,23 @@ export interface components {
             sector: string;
             slug: string;
             suspension_reason?: string;
+        };
+        SMEScreeningResultDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             * @example https://example.com/schemas/SMEScreeningResultDTO.json
+             */
+            readonly $schema?: string;
+            business_name: string;
+            flagged_reason?: string;
+            is_flagged: boolean;
+            matched_illegals: components["schemas"]["IllegalEntityDTO"][] | null;
+            owner_name: string;
+            risk_level: string;
+            /** Format: date-time */
+            scanned_at: string;
+            sme_id: string;
         };
         ScanInputBody: {
             /**
@@ -2739,15 +2869,15 @@ export interface components {
             id: string;
             is_incorporated_pt: boolean;
             is_listed_on_bursa: boolean;
+            is_suspended: boolean;
             /** @example a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11 */
             owner_id: string;
             /** @example Kuliner */
             sector: string;
             /** @example kopi-makmur-1234 */
             slug: string;
-            verify_show_figures: boolean;
-            is_suspended?: boolean;
             suspension_reason?: string;
+            verify_show_figures: boolean;
         };
         SnapshotDTO: {
             /**
@@ -2837,6 +2967,21 @@ export interface components {
             /** Format: date-time */
             suspended_until: string;
             suspension_reason?: string;
+        };
+        SyncResultDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             * @example https://example.com/schemas/SyncResultDTO.json
+             */
+            readonly $schema?: string;
+            fallback_used: boolean;
+            /** Format: int64 */
+            illegal_synced: number;
+            /** Format: int64 */
+            licensed_synced: number;
+            message: string;
+            success: boolean;
         };
         Text: {
             String: string;
@@ -3674,6 +3819,35 @@ export interface operations {
             };
         };
     };
+    ojkSyncUpstream: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncResultDTO"];
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
     adminListReviewQueue: {
         parameters: {
             query?: never;
@@ -3719,6 +3893,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SMEAdminDTO"][] | null;
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    ojkScreenSME: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SMEScreeningResultDTO"];
                 };
             };
             /** @description Error */
@@ -5067,6 +5272,67 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PortfolioItemDTO"][] | null;
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    ojkCheckEntity: {
+        parameters: {
+            query?: {
+                /** @description Keyword, brand, or platform name to check */
+                query?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OJKCheckResultDTO"];
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    ojkGetSCFPartners: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SCFPartnerDTO"][] | null;
                 };
             };
             /** @description Error */

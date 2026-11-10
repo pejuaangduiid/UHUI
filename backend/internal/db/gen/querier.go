@@ -18,6 +18,7 @@ type Querier interface {
 	CheckBoardroomAccess(ctx context.Context, arg CheckBoardroomAccessParams) (pgtype.Bool, error)
 	CheckDuplicateProofHash(ctx context.Context, arg CheckDuplicateProofHashParams) (bool, error)
 	CheckDuplicateReceiptScanHash(ctx context.Context, arg CheckDuplicateReceiptScanHashParams) (bool, error)
+	CheckEntityIllegalMatch(ctx context.Context, dollar_1 pgtype.Text) ([]OjkIllegalEntity, error)
 	CheckIfTransactionReversed(ctx context.Context, reversesTxID pgtype.UUID) (bool, error)
 	CheckSuspectDuplicate(ctx context.Context, arg CheckSuspectDuplicateParams) (bool, error)
 	ClaimDueSMEs(ctx context.Context) ([]ClaimDueSMEsRow, error)
@@ -71,6 +72,7 @@ type Querier interface {
 	GetReadinessConfigByVersion(ctx context.Context, version int32) (ReadinessConfig, error)
 	GetReceiptScanByID(ctx context.Context, arg GetReceiptScanByIDParams) (ReceiptScan, error)
 	GetRefreshTokenByHash(ctx context.Context, tokenHash []byte) (RefreshToken, error)
+	GetSCFPartnerByID(ctx context.Context, id pgtype.UUID) (OjkLicensedEntity, error)
 	GetSMEByID(ctx context.Context, id pgtype.UUID) (Sme, error)
 	GetSMEByOwnerID(ctx context.Context, ownerID pgtype.UUID) (Sme, error)
 	GetSMEBySlug(ctx context.Context, slug string) (Sme, error)
@@ -117,6 +119,7 @@ type Querier interface {
 	ListProfitDistributionsByCampaign(ctx context.Context, campaignID pgtype.UUID) ([]ProfitDistribution, error)
 	ListPublicHubThreads(ctx context.Context, limit int32) ([]ListPublicHubThreadsRow, error)
 	ListReviewQueue(ctx context.Context) ([]ListReviewQueueRow, error)
+	ListSCFPartners(ctx context.Context) ([]OjkLicensedEntity, error)
 	ListSMEsByOwnerID(ctx context.Context, ownerID pgtype.UUID) ([]Sme, error)
 	ListSnapshotsBySME(ctx context.Context, smeID pgtype.UUID) ([]ReportSnapshot, error)
 	ListStockMovements(ctx context.Context, arg ListStockMovementsParams) ([]StockMovement, error)
@@ -134,6 +137,8 @@ type Querier interface {
 	ReviewDocument(ctx context.Context, arg ReviewDocumentParams) (SmeDocument, error)
 	RevokeToken(ctx context.Context, id pgtype.UUID) error
 	RevokeTokenFamily(ctx context.Context, familyID pgtype.UUID) error
+	SearchIllegalEntities(ctx context.Context, dollar_1 pgtype.Text) ([]OjkIllegalEntity, error)
+	SearchLicensedEntities(ctx context.Context, dollar_1 pgtype.Text) ([]OjkLicensedEntity, error)
 	SetCampaignSuspension(ctx context.Context, arg SetCampaignSuspensionParams) (SetCampaignSuspensionRow, error)
 	SetSMESuspension(ctx context.Context, arg SetSMESuspensionParams) (SetSMESuspensionRow, error)
 	SetUserRole(ctx context.Context, arg SetUserRoleParams) error
@@ -152,6 +157,8 @@ type Querier interface {
 	UpdateStockQty(ctx context.Context, arg UpdateStockQtyParams) (InventoryItem, error)
 	UpdateThread(ctx context.Context, arg UpdateThreadParams) (CommunityThread, error)
 	UpdateVerifyShowFigures(ctx context.Context, arg UpdateVerifyShowFiguresParams) (UpdateVerifyShowFiguresRow, error)
+	UpsertIllegalEntity(ctx context.Context, arg UpsertIllegalEntityParams) (OjkIllegalEntity, error)
+	UpsertLicensedEntity(ctx context.Context, arg UpsertLicensedEntityParams) (OjkLicensedEntity, error)
 	UpsertSMEDocument(ctx context.Context, arg UpsertSMEDocumentParams) (SmeDocument, error)
 }
 

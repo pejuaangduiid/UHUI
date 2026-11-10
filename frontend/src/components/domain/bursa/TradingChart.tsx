@@ -69,9 +69,9 @@ export function TradingChart({
             <span className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               {formatIDR(activePoint.price_idr)}
             </span>
-            <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-              <TrendingUp className="h-3 w-3" /> +{(changeBps / 100).toFixed(2)}%
-            </span>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#DFE9F1] text-[#1D5FAE] border border-[#B9C8DD]">
+                <TrendingUp className="h-3 w-3" /> +{(changeBps / 100).toFixed(2)}%
+              </span>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export function TradingChart({
               type="button"
               onClick={() => setActiveInterval(intv)}
               className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${activeInterval === intv
-                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm"
+                  ? "bg-[#1D5FAE] text-white shadow-sm"
                   : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 }`}
             >
@@ -96,13 +96,13 @@ export function TradingChart({
         <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full overflow-visible" preserveAspectRatio="none">
           <defs>
             <linearGradient id="tradingWaveGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.45" />
-              <stop offset="60%" stopColor="#2563eb" stopOpacity="0.10" />
-              <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.0" />
+              <stop offset="0%" stopColor="#1D5FAE" stopOpacity="0.45" />
+              <stop offset="60%" stopColor="#1D5FAE" stopOpacity="0.10" />
+              <stop offset="100%" stopColor="#1D5FAE" stopOpacity="0.0" />
             </linearGradient>
           </defs>
           <path d={areaPath} fill="url(#tradingWaveGradient)" />
-          <path d={linePath} fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d={linePath} fill="none" stroke="#1D5FAE" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
           {coords.map((c, i) => (
             <circle
               key={i}
@@ -110,8 +110,8 @@ export function TradingChart({
               cy={c.y}
               r={hoverIndex === i ? 6 : 3}
               className={`transition-all cursor-pointer ${hoverIndex === i
-                  ? "fill-white stroke-blue-500 stroke-[3px]"
-                  : "fill-blue-500 opacity-60 hover:opacity-100"
+                  ? "fill-white stroke-[#1D5FAE] stroke-[3px]"
+                  : "fill-[#1D5FAE] opacity-60 hover:opacity-100"
                 }`}
               onMouseEnter={() => setHoverIndex(i)}
               onMouseLeave={() => setHoverIndex(null)}

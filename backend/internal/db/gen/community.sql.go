@@ -214,10 +214,17 @@ func (q *Queries) DeleteVote(ctx context.Context, arg DeleteVoteParams) error {
 }
 
 const getThreadByID = `-- name: GetThreadByID :one
-SELECT t.id, t.sme_id, t.author_id, t.visibility, t.kind, t.title, t.content, t.shared_metrics_json, t.attached_ai_report_id, t.upvotes_count, t.created_at, t.group_id, t.is_deleted_by_admin, t.admin_delete_reason, u.full_name as author_name, u.role as author_role,
+SELECT t.id, t.sme_id, t.author_id, t.visibility, t.kind, t.title, t.content, t.shared_metrics_json, t.attached_ai_report_id, t.upvotes_count, t.created_at, t.group_id, t.is_deleted_by_admin, t.admin_delete_reason, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         WHEN t.visibility = 'private_boardroom' THEN 'investor'::user_role
+         ELSE u.role
+       END)::user_role as author_role,
        cg.name as group_name, cg.slug as group_slug
 FROM community_threads t
 JOIN users u ON t.author_id = u.id
+LEFT JOIN smes s ON t.sme_id = s.id
 LEFT JOIN community_groups cg ON t.group_id = cg.id
 WHERE t.id = $1
 `
@@ -324,10 +331,16 @@ func (q *Queries) InsertVote(ctx context.Context, arg InsertVoteParams) (Communi
 }
 
 const listBoardroomThreads = `-- name: ListBoardroomThreads :many
-SELECT t.id, t.sme_id, t.author_id, t.visibility, t.kind, t.title, t.content, t.shared_metrics_json, t.attached_ai_report_id, t.upvotes_count, t.created_at, t.group_id, t.is_deleted_by_admin, t.admin_delete_reason, u.full_name as author_name, u.role as author_role,
+SELECT t.id, t.sme_id, t.author_id, t.visibility, t.kind, t.title, t.content, t.shared_metrics_json, t.attached_ai_report_id, t.upvotes_count, t.created_at, t.group_id, t.is_deleted_by_admin, t.admin_delete_reason, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         ELSE 'investor'::user_role
+       END)::user_role as author_role,
        (SELECT COUNT(1) FROM community_comments c WHERE c.thread_id = t.id) as comment_count
 FROM community_threads t
 JOIN users u ON t.author_id = u.id
+JOIN smes s ON t.sme_id = s.id
 WHERE t.visibility = 'private_boardroom' AND t.sme_id = $1
 ORDER BY t.created_at DESC
 LIMIT $2
@@ -397,9 +410,17 @@ func (q *Queries) ListBoardroomThreads(ctx context.Context, arg ListBoardroomThr
 }
 
 const listCommentsByThread = `-- name: ListCommentsByThread :many
-SELECT c.id, c.thread_id, c.author_id, c.content, c.created_at, c.is_deleted_by_admin, c.admin_delete_reason, u.full_name as author_name, u.role as author_role
+SELECT c.id, c.thread_id, c.author_id, c.content, c.created_at, c.is_deleted_by_admin, c.admin_delete_reason, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         WHEN t.visibility = 'private_boardroom' THEN 'investor'::user_role
+         ELSE u.role
+       END)::user_role as author_role
 FROM community_comments c
 JOIN users u ON c.author_id = u.id
+JOIN community_threads t ON c.thread_id = t.id
+LEFT JOIN smes s ON t.sme_id = s.id
 WHERE c.thread_id = $1
 ORDER BY c.created_at ASC
 `

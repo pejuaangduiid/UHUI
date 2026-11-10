@@ -41,8 +41,8 @@ export function BottomNav({ onQuickAction }: BottomNavProps) {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={`flex min-h-[44px] min-w-[44px] flex-col items-center justify-center text-xs font-medium transition-colors ${isActive
-                ? "text-blue-600 dark:text-blue-400 font-semibold"
-                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "text-[#1D5FAE] font-semibold"
+                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                 }`}
             >
               <Icon className="h-5 w-5" />
@@ -56,7 +56,7 @@ export function BottomNav({ onQuickAction }: BottomNavProps) {
             type="button"
             onClick={onQuickAction}
             aria-label="Catat Transaksi atau Foto Nota"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-transform active:scale-95 hover:bg-blue-500"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1D5FAE] text-white shadow-lg transition-transform active:scale-95 hover:bg-[#184e91]"
           >
             <Plus className="h-6 w-6" />
           </button>
@@ -71,8 +71,8 @@ export function BottomNav({ onQuickAction }: BottomNavProps) {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
               className={`flex min-h-[44px] min-w-[44px] flex-col items-center justify-center text-xs font-medium transition-colors ${isActive
-                ? "text-blue-600 dark:text-blue-400 font-semibold"
-                : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                  ? "text-[#1D5FAE] font-semibold"
+                  : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
                 }`}
             >
               <Icon className="h-5 w-5" />

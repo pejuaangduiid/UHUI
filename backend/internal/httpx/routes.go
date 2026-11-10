@@ -16,6 +16,7 @@ import (
 	"github.com/uhui/backend/internal/modules/inventory"
 	"github.com/uhui/backend/internal/modules/ledger"
 	"github.com/uhui/backend/internal/modules/lms"
+	"github.com/uhui/backend/internal/modules/ojk"
 	"github.com/uhui/backend/internal/modules/readiness"
 	"github.com/uhui/backend/internal/modules/receipts"
 	"github.com/uhui/backend/internal/modules/reports"
@@ -57,6 +58,9 @@ func RegisterRoutes(api huma.API, pool *pgxpool.Pool, cfg *config.Config, tm *mi
 	admin.RegisterHandlers(api, adminSvc)
 
 	q := getQueries(pool)
+
+	ojkSvc := ojk.NewService(pool, q)
+	ojk.RegisterHandlers(api, ojkSvc, pool)
 
 	payProvider := payment.NewSimulatedProvider(pool)
 	payment.RegisterWalletHandlers(api, payProvider)

@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { GLOSSARY } from "@/lib/glossary";
 
 export const metadata = {
-  title: "Kebijakan Privasi — UHUI",
+  title: "Kebijakan Privasi - UHUI",
   description: "Kebijakan perlindungan data pribadi pengguna platform simulasi UMKM UHUI.",
 };
 

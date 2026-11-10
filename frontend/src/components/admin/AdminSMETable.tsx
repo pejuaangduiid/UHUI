@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { AlertTriangle, CheckCircle, ShieldAlert } from "lucide-react";
 import { SuspendEntityModal } from "./SuspendEntityModal";
+import { OjkScreeningBadge } from "./OjkScreeningBadge";
 import type { components } from "@/types/api";
 
 type SMEAdminDTO = components["schemas"]["SMEAdminDTO"];
@@ -51,7 +52,10 @@ export function AdminSMETable({ items, onToggleSuspend, isLoading }: AdminSMETab
             {filtered.map((sme) => (
               <tr key={sme.id} className="hover:bg-slate-50/60 dark:hover:bg-white/[0.02] transition">
                 <td className="py-3.5 px-4">
-                  <div className="font-bold text-slate-900 dark:text-white">{sme.business_name}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900 dark:text-white">{sme.business_name}</span>
+                    <OjkScreeningBadge smeId={sme.id} />
+                  </div>
                   <div className="text-[11px] text-slate-400">{sme.sector} &bull; {sme.is_incorporated_pt ? "PT" : "Perorangan"}</div>
                 </td>
                 <td className="py-3.5 px-4">
@@ -87,8 +91,8 @@ export function AdminSMETable({ items, onToggleSuspend, isLoading }: AdminSMETab
                     type="button"
                     onClick={() => setSelectedSME(sme)}
                     className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${sme.is_suspended
-                        ? "bg-[#DFE9F1] text-[#1D5FAE] hover:bg-[#c9dbe9] dark:bg-blue-950/60 dark:text-blue-300"
-                        : "bg-rose-500/10 text-rose-600 hover:bg-rose-500/20"
+                      ? "bg-[#DFE9F1] text-[#1D5FAE] hover:bg-[#c9dbe9] dark:bg-blue-950/60 dark:text-blue-300"
+                      : "bg-rose-500/10 text-rose-600 hover:bg-rose-500/20"
                       }`}
                   >
                     <ShieldAlert className="h-3.5 w-3.5" />

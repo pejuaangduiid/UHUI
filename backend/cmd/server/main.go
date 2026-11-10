@@ -55,11 +55,11 @@ func main() {
 	}
 
 	app, api := httpx.NewServer(cfg, tm)
-	localFS, fakeLLM := setupDevServices(app, pool)
+	localFS, llmClient := setupDevServices(app, pool, cfg)
 
 	httpx.RegisterRoutes(api, pool, cfg, tm, httpx.Dependencies{
 		Store:     localFS,
-		LLMClient: fakeLLM,
+		LLMClient: llmClient,
 	})
 
 	quit := make(chan os.Signal, 1)
@@ -82,12 +82,21 @@ func main() {
 	slog.Info("server stopped")
 }
 
-func setupDevServices(app *fiber.App, pool *pgxpool.Pool) (*storage.LocalFSStorage, *llm.FakeLLM) {
+func setupDevServices(app *fiber.App, pool *pgxpool.Pool, cfg *config.Config) (storage.StorageProvider, llm.LLMClient) {
 	localFS, _ := storage.NewLocalFS("./tmp/storage", []byte("uhui-dev-storage-secret-key-1234"), "http://localhost:8080/api/v1/storage/dev")
 	storage.RegisterDevStorageHandler(app, localFS)
-	fakeLLM := llm.NewFakeLLM()
+
+	var llmClient llm.LLMClient
+	if cfg.GeminiAPIKey != "" {
+		llmClient = llm.NewGeminiClient(cfg.GeminiAPIKey, cfg.GeminiModel)
+		slog.Info("Gemini AI client initialized", "model", cfg.GeminiModel)
+	} else {
+		llmClient = llm.NewFakeLLM()
+		slog.Info("using FakeLLM for development")
+	}
+
 	q := gen.New(pool)
-	pipeline := aicopilot.NewPipeline(pool, q, fakeLLM, cache.NewL1())
+	pipeline := aicopilot.NewPipeline(pool, q, llmClient, cache.NewL1())
 	closer := bursa.NewCampaignCloser(pool, q, payment.NewSimulatedProvider(pool))
 	sched, err := scheduler.NewScheduler(pipeline, q, closer)
 	if err != nil {
@@ -96,5 +105,5 @@ func setupDevServices(app *fiber.App, pool *pgxpool.Pool) (*storage.LocalFSStora
 		sched.Start()
 		slog.Info("background scheduler started")
 	}
-	return localFS, fakeLLM
+	return localFS, llmClient
 }

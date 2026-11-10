@@ -22,33 +22,33 @@ export function VerificationNotice({ isVerified, isSuspectDuplicate }: Verificat
           </div>
         </div>
       ) : isVerified ? (
-        <div className="flex items-start gap-2.5 rounded-xl border border-blue-200 bg-blue-50/75 p-3.5 text-xs text-blue-800 dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-300">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
-          <div>
-            <span className="font-bold">Status Terverifikasi Penuh</span>
-            <p className="mt-0.5">
-              Nominal transaksi sama persis dengan hasil OCR dan tidak terdeteksi duplikasi. Transaksi ini bernilai penuh pada Skor Kesiapan (Komponen C).
-            </p>
+          <div className="flex items-start gap-2.5 rounded-xl border border-[#B9C8DD] bg-[#DFE9F1]/60 p-3.5 text-xs text-[#1D5FAE] dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-300">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-[#1D5FAE] dark:text-blue-400" />
+            <div>
+              <span className="font-bold">Status Terverifikasi Penuh</span>
+              <p className="mt-0.5">
+                Nominal transaksi sama persis dengan hasil OCR dan tidak terdeteksi duplikasi. Transaksi ini bernilai penuh pada Skor Kesiapan (Komponen C).
+              </p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-start gap-2.5 rounded-xl border border-blue-200 bg-blue-50/75 p-3.5 text-xs text-blue-800 dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-300">
-          <Info className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
-          <div>
-            <span className="font-bold">Pencatatan Mandiri</span>
-            <p className="mt-0.5">
-              Terdapat perbedaan nominal antara hasil OCR dan penyesuaian Anda. Transaksi tetap dicatat sebagai valid namun berstatus unverified.
-            </p>
-          </div>
-        </div>
+          ) : (
+            <div className="flex items-start gap-2.5 rounded-xl border border-[#B9C8DD] bg-[#DFE9F1]/60 p-3.5 text-xs text-[#1D5FAE] dark:border-blue-900/50 dark:bg-blue-950/30 dark:text-blue-300">
+              <Info className="h-4 w-4 shrink-0 text-[#1D5FAE] dark:text-blue-400" />
+              <div>
+                <span className="font-bold">Pencatatan Mandiri</span>
+                <p className="mt-0.5">
+                  Terdapat perbedaan nominal antara hasil OCR dan penyesuaian Anda. Transaksi tetap dicatat sebagai valid namun berstatus unverified.
+                </p>
+              </div>
+            </div>
       )}
 
-      <div className="flex items-center gap-2 rounded-xl border border-blue-200/80 bg-blue-50/60 p-3 text-xs text-blue-800 dark:border-blue-900/40 dark:bg-blue-950/20 dark:text-blue-300">
-        <PackageCheck className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
-        <span>
-          <strong>Sinkronisasi Inventaris Otomatis:</strong> Seluruh item dari nota ini akan langsung dicatat ke stok inventaris UMKM.
-        </span>
-      </div>
-    </div>
-  );
+              <div className="flex items-center gap-2 rounded-xl border border-[#B9C8DD] bg-[#DFE9F1]/40 p-3 text-xs text-[#1D5FAE] dark:border-blue-900/40 dark:bg-blue-950/20 dark:text-blue-300">
+                <PackageCheck className="h-4 w-4 shrink-0 text-[#1D5FAE] dark:text-blue-400" />
+                <span>
+                  <strong>Sinkronisasi Inventaris Otomatis:</strong> Seluruh item dari nota ini akan langsung dicatat ke stok inventaris UMKM.
+                </span>
+              </div>
+            </div>
+            );
 }

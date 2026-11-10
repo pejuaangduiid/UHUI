@@ -46,7 +46,7 @@ export default function SmeCampaignsPage() {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold hover:from-blue-500 hover:to-indigo-500 transition shadow-md shadow-blue-500/20"
+          className="inline-flex items-center gap-1.5 bg-[#1D5FAE] hover:bg-[#184e91] text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-sm"
         >
           <PlusCircle className="h-4 w-4" />
           <span>{showForm ? "Tutup Formulir" : "Jual Saham Baru"}</span>
@@ -94,10 +94,10 @@ export default function SmeCampaignsPage() {
               <div key={c.id} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-[#121827] space-y-4">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-100 dark:border-white/[0.06] pb-3">
                   <div>
-                    <span className="text-[11px] font-semibold uppercase text-blue-500 bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 rounded-full">
-                      {c.scheme === "micro_equity" ? "Mikro-Ekuitas" : "Bagi Hasil"}
-                    </span>
-                    <h3 className="font-bold text-base text-slate-900 dark:text-white mt-1.5">{c.title}</h3>
+                      <span className="text-[11px] font-semibold uppercase text-[#1D5FAE] dark:text-blue-300 bg-[#DFE9F1] dark:bg-blue-950/60 border border-[#B9C8DD] dark:border-blue-900/40 px-2.5 py-0.5 rounded-full">
+                        {c.scheme === "micro_equity" ? "Mikro-Ekuitas" : "Bagi Hasil"}
+                      </span>
+                      <h3 className="font-bold text-base text-slate-900 dark:text-white mt-1.5">{c.title}</h3>
                   </div>
 
                   <div className="text-right text-xs">

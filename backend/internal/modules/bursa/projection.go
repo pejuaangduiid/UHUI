@@ -20,6 +20,11 @@ type PublicCampaignDTO struct {
 	ReturnShareBps       int16     `json:"return_share_bps"`
 	TermMonths           int16     `json:"term_months"`
 	IsIncorporatedPT     bool      `json:"is_incorporated_pt"`
+	SCFPartnerID         *string   `json:"scf_partner_id,omitempty"`
+	SCFPartnerName       *string   `json:"scf_partner_name,omitempty"`
+	SCFLicenseNumber     *string   `json:"scf_license_number,omitempty"`
+	SCFWebsiteURL        *string   `json:"scf_website_url,omitempty"`
+	OJKRegisteredCode    *string   `json:"ojk_registered_code,omitempty"`
 }
 
 type PublicCampaignDetailDTO struct {
@@ -28,23 +33,25 @@ type PublicCampaignDetailDTO struct {
 }
 
 type CampaignDTO struct {
-	FundedAt         *time.Time `json:"funded_at,omitempty"`
-	ReviewNote       *string    `json:"review_note,omitempty"`
-	ReviewedBy       *string    `json:"reviewed_by,omitempty"`
-	ReadinessScoreID *string    `json:"readiness_score_id,omitempty"`
-	CreatedAt        time.Time  `json:"created_at"`
-	ClosesAt         time.Time  `json:"closes_at"`
-	ID               string     `json:"id"`
-	SMEID            string     `json:"sme_id"`
-	Slug             string     `json:"slug"`
-	Title            string     `json:"title"`
-	Scheme           string     `json:"scheme"`
-	Status           string     `json:"status"`
-	TargetAmountIDR  int64      `json:"target_amount_idr"`
-	RaisedAmountIDR  int64      `json:"raised_amount_idr"`
-	MinInvestmentIDR int64      `json:"min_investment_idr"`
-	ReturnShareBps   int16      `json:"return_share_bps"`
-	TermMonths       int16      `json:"term_months"`
+	FundedAt          *time.Time `json:"funded_at,omitempty"`
+	ReviewNote        *string    `json:"review_note,omitempty"`
+	ReviewedBy        *string    `json:"reviewed_by,omitempty"`
+	ReadinessScoreID  *string    `json:"readiness_score_id,omitempty"`
+	SCFPartnerID      *string    `json:"scf_partner_id,omitempty"`
+	OJKRegisteredCode *string    `json:"ojk_registered_code,omitempty"`
+	CreatedAt         time.Time  `json:"created_at"`
+	ClosesAt          time.Time  `json:"closes_at"`
+	ID                string     `json:"id"`
+	SMEID             string     `json:"sme_id"`
+	Slug              string     `json:"slug"`
+	Title             string     `json:"title"`
+	Scheme            string     `json:"scheme"`
+	Status            string     `json:"status"`
+	TargetAmountIDR   int64      `json:"target_amount_idr"`
+	RaisedAmountIDR   int64      `json:"raised_amount_idr"`
+	MinInvestmentIDR  int64      `json:"min_investment_idr"`
+	ReturnShareBps    int16      `json:"return_share_bps"`
+	TermMonths        int16      `json:"term_months"`
 }
 
 type InvestmentDTO struct {

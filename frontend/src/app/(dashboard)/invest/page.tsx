@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MessageSquare, PlusCircle, Store, Briefcase } from "lucide-react";
 import { BursaCatalogSection } from "@/components/domain/bursa/BursaCatalogSection";
 import { UserPortfolioSection } from "@/components/domain/bursa/UserPortfolioSection";
+import { OjkLegalityChecker } from "@/components/domain/bursa/OjkLegalityChecker";
 import { WalletBadge } from "@/components/domain/wallet/WalletBadge";
 import { usePortfolio } from "@/hooks/use-invest";
 
@@ -55,11 +56,10 @@ export default function BursaSahamDashboardPage() {
         <button
           type="button"
           onClick={() => setActiveTab("katalog")}
-          className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "katalog"
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${activeTab === "katalog"
               ? "bg-white dark:bg-[#172940] text-[#1D5FAE] dark:text-blue-300 shadow-xs font-bold"
               : "text-[#516072] dark:text-slate-400 hover:text-[#0F1E2E] dark:hover:text-white"
-          }`}
+            }`}
         >
           <Store className="h-3.5 w-3.5" />
           <span>Katalog Penjualan Saham</span>
@@ -68,11 +68,10 @@ export default function BursaSahamDashboardPage() {
         <button
           type="button"
           onClick={() => setActiveTab("portofolio")}
-          className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "portofolio"
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${activeTab === "portofolio"
               ? "bg-white dark:bg-[#172940] text-[#1D5FAE] dark:text-blue-300 shadow-xs font-bold"
               : "text-[#516072] dark:text-slate-400 hover:text-[#0F1E2E] dark:hover:text-white"
-          }`}
+            }`}
         >
           <Briefcase className="h-3.5 w-3.5" />
           <span>Saham Saya &amp; Portofolio</span>
@@ -85,9 +84,15 @@ export default function BursaSahamDashboardPage() {
       </div>
 
       {activeTab === "katalog" ? (
-        <BursaCatalogSection />
+        <div className="space-y-6">
+          <BursaCatalogSection />
+          <OjkLegalityChecker />
+        </div>
       ) : (
-        <UserPortfolioSection onExplore={() => setActiveTab("katalog")} />
+        <div className="space-y-6">
+          <UserPortfolioSection onExplore={() => setActiveTab("katalog")} />
+          <OjkLegalityChecker />
+        </div>
       )}
     </div>
   );

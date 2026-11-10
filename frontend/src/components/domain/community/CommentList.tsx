@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { formatDate } from "@/lib/dates";
+import { formatUserRole } from "@/lib/roles";
 import { Send, Loader2, MessageSquare, Trash2 } from "lucide-react";
 import type { components } from "@/types/api";
 
@@ -50,7 +51,7 @@ export function CommentList({
                       </div>
                       <span className="font-bold text-slate-900 dark:text-white">{c.author_name}</span>
                       <span className="text-[10px] px-2 py-0.2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-semibold">
-                        {c.author_role}
+                        {formatUserRole(c.author_role)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">

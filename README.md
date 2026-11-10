@@ -1,4 +1,4 @@
-# UHUI — Platform Digitalisasi UMKM & Bursa Mikro-Ekuitas
+# UHUI - Platform Digitalisasi UMKM & Bursa Mikro-Ekuitas
 
 [![Go Version](https://img.shields.io/badge/Go-1.27+-00ADD8?style=flat&logo=go)](https://golang.org)
 [![Next.js](https://img.shields.io/badge/Next.js-15.x-black?style=flat&logo=next.js)](https://nextjs.org)
@@ -30,7 +30,7 @@
 
 * 🏪 **Point of Sale (POS) & Operasional Harian**: Kasir responsif (*mobile & desktop*), manajemen inventaris, dan scanner nota belanja berbasis OCR yang langsung terhubung ke buku besar keuangan.
 * 📒 **Buku Besar Berpasangan (*Double-Entry Ledger*)**: Mutasi keuangan atomik dan terisolasi dengan prinsip akuntansi standar (Debit/Kredit seimbang) tanpa pembulatan mengambang (*zero floating point*).
-* 📊 **Skor Kesiapan Digital (*Readiness Score*)**: Evaluasi otomatis kelayakan UMKM (skor 0–100) berbasis 4 pilar: kelengkapan profil & legalitas, kepatuhan pencatatan, rasio kesehatan finansial, dan stabilitas operasional.
+* 📊 **Skor Kesiapan Digital (*Readiness Score*)**: Evaluasi otomatis kelayakan UMKM (skor 0-100) berbasis 4 pilar: kelengkapan profil & legalitas, kepatuhan pencatatan, rasio kesehatan finansial, dan stabilitas operasional.
 * 🤖 **AI Business Co-Pilot Terjadwal**: Analisis bisnis otomatis via scheduler harian (`gocron/v2` 00:00 WIB), deteksi anomali (*dead stock*, lonjakan harga modal, margin drop), dan 3 rekomendasi tindakan taktis bebas PII.
 * 📄 **Dokumen Ekspor Finansial & Verifikasi Publik**: Ekspor laporan keuangan SAK EMKM, prospektus investasi, dan laporan bulanan ber-QR code dengan footer hash SHA-256 yang dapat diverifikasi publik tanpa login di `/verify/{hash}`.
 * 📈 **Bursa Mikro-Ekuitas (Simulasi)**: Kampanye pendanaan transparan dengan proteksi transaksi atomik (`SELECT ... FOR UPDATE`), pembagian laba dividen pro-rata integer berbasis basis poin (`bps`), dan aturan penutupan sisa kuota (*remainder investment*).
@@ -58,8 +58,8 @@
 ## 📋 Prasyarat Sistem
 
 Sebelum memulai, pastikan perangkat Anda telah terpasang:
-1. **Go** (versi 1.27 atau lebih baru) — [Unduh Go](https://go.dev/dl/)
-2. **Node.js** (versi 20 LTS atau lebih baru) & **npm** — [Unduh Node.js](https://nodejs.org/)
+1. **Go** (versi 1.27 atau lebih baru) - [Unduh Go](https://go.dev/dl/)
+2. **Node.js** (versi 20 LTS atau lebih baru) & **npm** - [Unduh Node.js](https://nodejs.org/)
 3. **Goose** (CLI migrasi database):
    ```powershell
    go install github.com/pressly/goose/v3/cmd/goose@latest
@@ -179,14 +179,14 @@ Tekan `Ctrl + C` kapan saja untuk menghentikan kedua server.
 
 #### **Opsi B: Dua Terminal Terpisah**
 
-* **Terminal 1 — Backend (Go Server)**:
+* **Terminal 1 - Backend (Go Server)**:
   ```powershell
   cd backend
   go run cmd/server/main.go
   ```
   *Server aktif di: `http://localhost:8080`*
 
-* **Terminal 2 — Frontend (Next.js)**:
+* **Terminal 2 - Frontend (Next.js)**:
   ```powershell
   cd frontend
   npm run dev

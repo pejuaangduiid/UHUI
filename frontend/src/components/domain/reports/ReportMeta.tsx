@@ -37,13 +37,13 @@ export const ReportMeta: React.FC<ReportMetaProps> = ({
     <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2 text-sm font-medium text-zinc-200">
-          <ShieldCheck className="w-4 h-4 text-blue-400" />
+          <ShieldCheck className="w-4 h-4 text-[#1D5FAE]" />
           <span>Kriptografis SHA-256 Snapshot</span>
         </div>
         <Link
           href={`/verify/${sha256}`}
           target="_blank"
-          className="text-xs text-blue-400 hover:text-blue-300 inline-flex items-center gap-1"
+          className="text-xs text-[#1D5FAE] hover:underline inline-flex items-center gap-1"
         >
           <span>Halaman Verifikasi Publik</span>
           <ExternalLink className="w-3 h-3" />
@@ -60,7 +60,7 @@ export const ReportMeta: React.FC<ReportMetaProps> = ({
           className="p-1.5 hover:bg-zinc-800 text-zinc-400 rounded transition shrink-0"
           title="Salin Hash"
         >
-          {copied ? <Check className="w-4 h-4 text-blue-400" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-[#1D5FAE]" /> : <Copy className="w-4 h-4" />}
         </button>
       </div>
 
@@ -70,7 +70,7 @@ export const ReportMeta: React.FC<ReportMetaProps> = ({
           checked={showFigures}
           disabled={updating}
           onChange={handleToggle}
-          className="mt-0.5 rounded text-blue-600 focus:ring-blue-500"
+          className="mt-0.5 rounded text-[#1D5FAE] focus:ring-[#1D5FAE]"
         />
         <div className="text-xs text-zinc-400">
           <strong className="text-zinc-200 block">Tampilkan Angka Kunci di Halaman Verifikasi Publik</strong>

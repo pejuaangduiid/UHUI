@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -76,7 +77,11 @@ func (s *Service) ScanReceipt(ctx context.Context, smeID, userID pgtype.UUID, im
 
 	proposal, err := s.llm.ExtractReceipt(ctx, imgBytes, mimeType)
 	if err != nil {
-		return nil, fmt.Errorf("ocr extraction: %w", err)
+		errStr := strings.ToLower(err.Error())
+		if errors.Is(err, llm.ErrNotReceipt) || strings.Contains(errStr, "bukan nota") || strings.Contains(errStr, "tidak terbaca") {
+			return nil, apperr.Unprocessable("NOT_A_RECEIPT", "Gambar yang diunggah bukan nota transaksi yang valid atau teks tidak terbaca", err.Error())
+		}
+		return nil, apperr.Unprocessable("OCR_EXTRACTION_FAILED", "Gagal mengekstrak teks nota dari gambar", err.Error())
 	}
 	if err := llm.ValidateReceiptProposal(proposal); err != nil {
 		return nil, apperr.Unprocessable(apperr.CodeBadRequest, "Format hasil OCR nota tidak valid", err.Error())

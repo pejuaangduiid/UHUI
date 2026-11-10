@@ -245,11 +245,18 @@ func registerPostBoardroomThread(api huma.API, q *gen.Queries) {
 			authorName = u.FullName
 		}
 
+		authorRole := "investor"
+		if p.Role == "superadmin" {
+			authorRole = "superadmin"
+		} else if sme, err := q.GetSMEByID(ctx, camp.SmeID); err == nil && sme.OwnerID.Valid && uuid.UUID(sme.OwnerID.Bytes) == userUUID {
+			authorRole = "sme_owner"
+		}
+
 		return &struct{ Body *BoardroomThreadDTO }{
 			Body: &BoardroomThreadDTO{
 				ID:           uuid.UUID(t.ID.Bytes).String(),
 				AuthorName:   authorName,
-				AuthorRole:   p.Role,
+				AuthorRole:   authorRole,
 				Title:        t.Title,
 				Content:      t.Content,
 				CommentCount: 0,

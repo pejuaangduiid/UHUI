@@ -14,7 +14,7 @@
   --sidebar-bg: #F4F3F1;
   --topbar-bg: rgba(250, 249, 246, 0.92);
 
-  --primary: #00478C;
+  --primary: #1D5FAE;
   --primary-container: #1D5FAE;
   --primary-text: #FFFFFF;
   --accent: #1D5FAE;
@@ -71,6 +71,14 @@
 }
 
 @theme inline {
+  --color-blue-500: #1D5FAE;
+  --color-blue-600: #1D5FAE;
+  --color-blue-700: #184e91;
+  --color-indigo-500: #1D5FAE;
+  --color-indigo-600: #1D5FAE;
+  --color-indigo-700: #184e91;
+  --color-brand-blue: #1D5FAE;
+  --color-brand-blue-hover: #184e91;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

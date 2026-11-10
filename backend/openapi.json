@@ -675,6 +675,9 @@
             "format": "int64",
             "type": "integer"
           },
+          "ojk_registered_code": {
+            "type": "string"
+          },
           "raised_amount_idr": {
             "format": "int64",
             "type": "integer"
@@ -692,6 +695,9 @@
             "type": "string"
           },
           "reviewed_by": {
+            "type": "string"
+          },
+          "scf_partner_id": {
             "type": "string"
           },
           "scheme": {
@@ -1441,11 +1447,17 @@
             "format": "int64",
             "type": "integer"
           },
+          "ojk_registered_code": {
+            "type": "string"
+          },
           "return_share_bps": {
             "format": "int32",
             "maximum": 32767,
             "minimum": -32768,
             "type": "integer"
+          },
+          "scf_partner_id": {
+            "type": "string"
           },
           "scheme": {
             "type": "string"
@@ -2038,6 +2050,30 @@
         ],
         "type": "object"
       },
+      "IllegalEntityDTO": {
+        "additionalProperties": false,
+        "properties": {
+          "activity_type": {
+            "type": "string"
+          },
+          "entity_name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "suspicion_notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "entity_name",
+          "activity_type",
+          "suspicion_notes"
+        ],
+        "type": "object"
+      },
       "Int2": {
         "additionalProperties": false,
         "properties": {
@@ -2423,6 +2459,64 @@
         ],
         "type": "object"
       },
+      "OJKCheckResultDTO": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "https://example.com/schemas/OJKCheckResultDTO.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "data_source": {
+            "type": "string"
+          },
+          "disclaimer": {
+            "type": "string"
+          },
+          "illegal_matches": {
+            "items": {
+              "$ref": "#/components/schemas/IllegalEntityDTO"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "licensed_matches": {
+            "items": {
+              "$ref": "#/components/schemas/SCFPartnerDTO"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "total_matches": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query",
+          "total_matches",
+          "status",
+          "licensed_matches",
+          "illegal_matches",
+          "data_source",
+          "disclaimer"
+        ],
+        "type": "object"
+      },
       "PortfolioItemDTO": {
         "additionalProperties": false,
         "properties": {
@@ -2609,6 +2703,9 @@
             "format": "int64",
             "type": "integer"
           },
+          "ojk_registered_code": {
+            "type": "string"
+          },
           "raised_amount_idr": {
             "format": "int64",
             "type": "integer"
@@ -2618,6 +2715,18 @@
             "maximum": 32767,
             "minimum": -32768,
             "type": "integer"
+          },
+          "scf_license_number": {
+            "type": "string"
+          },
+          "scf_partner_id": {
+            "type": "string"
+          },
+          "scf_partner_name": {
+            "type": "string"
+          },
+          "scf_website_url": {
+            "type": "string"
           },
           "scheme": {
             "type": "string"
@@ -2701,6 +2810,9 @@
             "format": "int64",
             "type": "integer"
           },
+          "ojk_registered_code": {
+            "type": "string"
+          },
           "raised_amount_idr": {
             "format": "int64",
             "type": "integer"
@@ -2710,6 +2822,18 @@
             "maximum": 32767,
             "minimum": -32768,
             "type": "integer"
+          },
+          "scf_license_number": {
+            "type": "string"
+          },
+          "scf_partner_id": {
+            "type": "string"
+          },
+          "scf_partner_name": {
+            "type": "string"
+          },
+          "scf_website_url": {
+            "type": "string"
           },
           "scheme": {
             "type": "string"
@@ -3091,6 +3215,42 @@
         ],
         "type": "object"
       },
+      "SCFPartnerDTO": {
+        "additionalProperties": false,
+        "properties": {
+          "brand_name": {
+            "type": "string"
+          },
+          "entity_name": {
+            "type": "string"
+          },
+          "entity_type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "license_number": {
+            "type": "string"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "entity_name",
+          "brand_name",
+          "license_number",
+          "entity_type",
+          "website_url",
+          "is_active"
+        ],
+        "type": "object"
+      },
       "SMEAdminDTO": {
         "additionalProperties": false,
         "properties": {
@@ -3154,6 +3314,61 @@
           "is_incorporated_pt",
           "is_listed_on_bursa",
           "is_suspended"
+        ],
+        "type": "object"
+      },
+      "SMEScreeningResultDTO": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "https://example.com/schemas/SMEScreeningResultDTO.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "business_name": {
+            "type": "string"
+          },
+          "flagged_reason": {
+            "type": "string"
+          },
+          "is_flagged": {
+            "type": "boolean"
+          },
+          "matched_illegals": {
+            "items": {
+              "$ref": "#/components/schemas/IllegalEntityDTO"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          },
+          "owner_name": {
+            "type": "string"
+          },
+          "risk_level": {
+            "type": "string"
+          },
+          "scanned_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "sme_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sme_id",
+          "business_name",
+          "owner_name",
+          "risk_level",
+          "is_flagged",
+          "matched_illegals",
+          "scanned_at"
         ],
         "type": "object"
       },
@@ -3544,6 +3759,9 @@
           "is_listed_on_bursa": {
             "type": "boolean"
           },
+          "is_suspended": {
+            "type": "boolean"
+          },
           "owner_id": {
             "examples": [
               "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"
@@ -3562,6 +3780,9 @@
             ],
             "type": "string"
           },
+          "suspension_reason": {
+            "type": "string"
+          },
           "verify_show_figures": {
             "type": "boolean"
           }
@@ -3577,7 +3798,8 @@
           "digital_readiness_score",
           "is_incorporated_pt",
           "is_listed_on_bursa",
-          "verify_show_figures"
+          "verify_show_figures",
+          "is_suspended"
         ],
         "type": "object"
       },
@@ -3816,6 +4038,45 @@
           "email",
           "full_name",
           "role"
+        ],
+        "type": "object"
+      },
+      "SyncResultDTO": {
+        "additionalProperties": false,
+        "properties": {
+          "$schema": {
+            "description": "A URL to the JSON Schema for this object.",
+            "examples": [
+              "https://example.com/schemas/SyncResultDTO.json"
+            ],
+            "format": "uri",
+            "readOnly": true,
+            "type": "string"
+          },
+          "fallback_used": {
+            "type": "boolean"
+          },
+          "illegal_synced": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "licensed_synced": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "success",
+          "fallback_used",
+          "message",
+          "licensed_synced",
+          "illegal_synced"
         ],
         "type": "object"
       },
@@ -5420,6 +5681,37 @@
         ]
       }
     },
+    "/api/v1/admin/ojk/sync": {
+      "post": {
+        "operationId": "ojkSyncUpstream",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncResultDTO"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Trigger sync of OJK registered apps and illegal entities from upstream",
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
     "/api/v1/admin/review-queue": {
       "get": {
         "operationId": "adminListReviewQueue",
@@ -5489,6 +5781,47 @@
           }
         },
         "summary": "List all registered SMEs with suspension status",
+        "tags": [
+          "Admin"
+        ]
+      }
+    },
+    "/api/v1/admin/smes/{id}/ojk-screening": {
+      "get": {
+        "operationId": "ojkScreenSME",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SMEScreeningResultDTO"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Audit and screen SME against OJK illegal entity blacklist",
         "tags": [
           "Admin"
         ]
@@ -7382,6 +7715,86 @@
         "summary": "Get current investor portfolio",
         "tags": [
           "Investments"
+        ]
+      }
+    },
+    "/api/v1/ojk/check": {
+      "get": {
+        "operationId": "ojkCheckEntity",
+        "parameters": [
+          {
+            "description": "Keyword, brand, or platform name to check",
+            "explode": false,
+            "in": "query",
+            "name": "query",
+            "schema": {
+              "description": "Keyword, brand, or platform name to check",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OJKCheckResultDTO"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Check entity legality against OJK registered \u0026 illegal entities",
+        "tags": [
+          "OJK"
+        ]
+      }
+    },
+    "/api/v1/ojk/scf-partners": {
+      "get": {
+        "operationId": "ojkGetSCFPartners",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SCFPartnerDTO"
+                  },
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorModel"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "summary": "Get official OJK licensed Securities Crowdfunding partners",
+        "tags": [
+          "OJK"
         ]
       }
     },

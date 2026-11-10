@@ -8,6 +8,7 @@ import (
 
 	"github.com/danielgtaylor/huma/v2"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/uhui/backend/internal/apperr"
 	"github.com/uhui/backend/internal/db/gen"
 )
@@ -115,12 +116,23 @@ func registerGetPublicCampaignBySlug(api huma.API, q *gen.Queries) {
 				Sector:               r.Sector,
 				IsIncorporatedPT:     r.IsIncorporatedPt,
 				LatestReadinessScore: score,
+				SCFPartnerName:       textToPtr(r.ScfPartnerName),
+				SCFLicenseNumber:     textToPtr(r.ScfLicenseNumber),
+				SCFWebsiteURL:        textToPtr(r.ScfWebsiteUrl),
+				OJKRegisteredCode:    textToPtr(r.OjkRegisteredCode),
 			},
 			Description: r.SmeDescription,
 		}
 		globalPublicCache.setDetail(in.Slug, detail, 45*time.Second)
 		return &struct{ Body *PublicCampaignDetailDTO }{Body: detail}, nil
 	})
+}
+
+func textToPtr(t pgtype.Text) *string {
+	if t.Valid && t.String != "" {
+		return &t.String
+	}
+	return nil
 }
 
 func mapAppError(err error) error {

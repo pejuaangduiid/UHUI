@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { AlertTriangle, Trash2, UserX } from "lucide-react";
 import { SuspendUserModal } from "./SuspendUserModal";
+import { formatUserRole } from "@/lib/roles";
 import type { components } from "@/types/api";
 
 type ThreadModerationDTO = components["schemas"]["ThreadModerationDTO"];
@@ -57,8 +58,8 @@ export function AdminThreadModerationList({
             <div
               key={t.id}
               className={`p-4 rounded-2xl border transition shadow-sm bg-white dark:bg-[#121827] ${t.is_deleted_by_admin
-                  ? "border-amber-500/30 bg-amber-500/[0.02]"
-                  : "border-slate-200/80 dark:border-white/[0.07]"
+                ? "border-amber-500/30 bg-amber-500/[0.02]"
+                : "border-slate-200/80 dark:border-white/[0.07]"
                 }`}
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
@@ -68,7 +69,7 @@ export function AdminThreadModerationList({
                     <span className="text-slate-400">&bull;</span>
                     <span className="text-slate-500 dark:text-slate-400 text-[11px]">{t.author_email}</span>
                     <span className="text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded">
-                      {t.author_role}
+                      {formatUserRole(t.author_role)}
                     </span>
                     {t.group_name && (
                       <span className="text-[10px] font-bold text-[#1D5FAE] bg-[#DFE9F1] dark:bg-blue-950/60 dark:text-blue-300 px-1.5 py-0.5 rounded">
@@ -86,53 +87,53 @@ export function AdminThreadModerationList({
                     {t.content}
                   </p>
                   {t.is_deleted_by_admin && (
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-[11px] font-medium">
-                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                        <span>Postingan Dihapus oleh Admin: &quot;{t.admin_delete_reason || "Pelanggaran tata tertib"}&quot;</span>
-                      </div>
-                    )}
-                  </div>
+                    <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-[11px] font-medium">
+                      <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                      <span>Postingan Dihapus oleh Admin: &quot;{t.admin_delete_reason || "Pelanggaran tata tertib"}&quot;</span>
+                    </div>
+                  )}
+                </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
-                    {!t.is_deleted_by_admin && (
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(t)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 transition"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                        <span>Hapus oleh Admin</span>
-                      </button>
-                    )}
+                <div className="flex items-center gap-2 shrink-0">
+                  {!t.is_deleted_by_admin && (
                     <button
                       type="button"
-                      onClick={() => setUserToSuspend({ id: t.author_id, name: t.author_name, email: t.author_email })}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
+                      onClick={() => handleDelete(t)}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 transition"
                     >
-                      <UserX className="h-3.5 w-3.5" />
-                      <span>Suspend Penulis</span>
+                      <Trash2 className="h-3.5 w-3.5" />
+                      <span>Hapus oleh Admin</span>
                     </button>
-                  </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setUserToSuspend({ id: t.author_id, name: t.author_name, email: t.author_email })}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition"
+                  >
+                    <UserX className="h-3.5 w-3.5" />
+                    <span>Suspend Penulis</span>
+                  </button>
                 </div>
               </div>
-              );
-        })}
             </div>
+          );
+        })}
+      </div>
 
       {
-            userToSuspend && (
-              <SuspendUserModal
-                isOpen={Boolean(userToSuspend)}
-                onClose={() => setUserToSuspend(null)}
-                userId={userToSuspend.id}
-                userName={userToSuspend.name}
-                userEmail={userToSuspend.email}
-                onConfirm={onSuspendUser}
-                isLoading={isLoading}
-              />
-            )
-          }
+        userToSuspend && (
+          <SuspendUserModal
+            isOpen={Boolean(userToSuspend)}
+            onClose={() => setUserToSuspend(null)}
+            userId={userToSuspend.id}
+            userName={userToSuspend.name}
+            userEmail={userToSuspend.email}
+            onConfirm={onSuspendUser}
+            isLoading={isLoading}
+          />
+        )
+      }
     </div>
-      );
+  );
 }
 

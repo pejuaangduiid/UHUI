@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { formatIDR } from "@/lib/money";
 import type { CreateCampaignInput } from "@/hooks/use-campaigns";
+import { SCFPartnerSelect } from "./SCFPartnerSelect";
 
 interface CampaignFormProps {
   isPT: boolean;
@@ -17,6 +18,8 @@ export function CampaignForm({ isPT, onSubmit, isLoading }: CampaignFormProps) {
   const [minInvestment, setMinInvestment] = useState(500_000);
   const [returnPercent, setReturnPercent] = useState(15);
   const [termMonths, setTermMonths] = useState(12);
+  const [scfPartnerId, setScfPartnerId] = useState("");
+  const [ojkCode, setOjkCode] = useState("");
   const [closesAt, setClosesAt] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 30);
@@ -33,6 +36,8 @@ export function CampaignForm({ isPT, onSubmit, isLoading }: CampaignFormProps) {
       return_share_bps: Math.round(returnPercent * 100),
       term_months: termMonths,
       closes_at: new Date(closesAt).toISOString(),
+      scf_partner_id: scfPartnerId || undefined,
+      ojk_registered_code: ojkCode || undefined,
     });
   };
 
@@ -131,6 +136,13 @@ export function CampaignForm({ isPT, onSubmit, isLoading }: CampaignFormProps) {
           />
         </div>
       </div>
+
+      <SCFPartnerSelect
+        selectedId={scfPartnerId}
+        onSelect={setScfPartnerId}
+        ojkCode={ojkCode}
+        onCodeChange={setOjkCode}
+      />
 
       <button
         type="submit"

@@ -133,7 +133,7 @@ export default function ReceiptConfirmPage() {
             type="button"
             disabled={confirmReceipt.isPending}
             onClick={handleConfirm}
-            className="flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-50 shadow-md shadow-blue-500/20"
+            className="flex items-center gap-2 rounded-xl bg-[#1D5FAE] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#184e91] disabled:opacity-50 shadow-md shadow-blue-500/20"
           >
             {confirmReceipt.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Package className="h-4 w-4" />}
             Simpan Kas &amp; Masuk ke Inventaris

@@ -40,7 +40,7 @@ export function GateList({ gateFailures }: GateListProps) {
                 {isFailed ? (
                   <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
                 ) : (
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-blue-500" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#1D5FAE]" />
                 )}
                 <div>
                   <h5 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">

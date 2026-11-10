@@ -13,7 +13,7 @@ export const GLOSSARY = {
   readinessScore: {
     label: "Skor Kesiapan Usaha",
     full: "Skor Kesiapan Usaha (Readiness Score)",
-    tooltip: "Indeks penilaian kesiapan tata kelola dan kesehatan finansial usaha (0–100).",
+    tooltip: "Indeks penilaian kesiapan tata kelola dan kesehatan finansial usaha (0-100).",
   },
   revenueSharing: {
     label: "Patungan Hasil Usaha",

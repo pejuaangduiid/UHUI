@@ -1,10 +1,12 @@
 -- name: CreateCampaign :one
 INSERT INTO bursa_campaigns (
   sme_id, slug, title, scheme, target_amount_idr,
-  min_investment_idr, return_share_bps, term_months, closes_at
+  min_investment_idr, return_share_bps, term_months, closes_at,
+  scf_partner_id, ojk_registered_code
 ) VALUES (
   $1, $2, $3, $4, $5,
-  $6, $7, $8, $9
+  $6, $7, $8, $9,
+  $10, $11
 ) RETURNING *;
 
 -- name: GetCampaignByID :one
@@ -17,9 +19,11 @@ WHERE id = $1
 FOR UPDATE;
 
 -- name: GetCampaignBySlug :one
-SELECT c.*, s.business_name, s.sector, s.description as sme_description, s.is_incorporated_pt, s.digital_readiness_score as latest_readiness_score
+SELECT c.*, s.business_name, s.sector, s.description as sme_description, s.is_incorporated_pt, s.digital_readiness_score as latest_readiness_score,
+       p.brand_name as scf_partner_name, p.license_number as scf_license_number, p.website_url as scf_website_url
 FROM bursa_campaigns c
 JOIN smes s ON c.sme_id = s.id
+LEFT JOIN ojk_licensed_entities p ON c.scf_partner_id = p.id
 WHERE c.slug = $1;
 
 -- name: ListCampaignsBySME :many

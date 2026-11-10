@@ -6,10 +6,17 @@ INSERT INTO community_threads (
 ) RETURNING *;
 
 -- name: GetThreadByID :one
-SELECT t.*, u.full_name as author_name, u.role as author_role,
+SELECT t.*, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         WHEN t.visibility = 'private_boardroom' THEN 'investor'::user_role
+         ELSE u.role
+       END)::user_role as author_role,
        cg.name as group_name, cg.slug as group_slug
 FROM community_threads t
 JOIN users u ON t.author_id = u.id
+LEFT JOIN smes s ON t.sme_id = s.id
 LEFT JOIN community_groups cg ON t.group_id = cg.id
 WHERE t.id = $1;
 
@@ -25,10 +32,16 @@ ORDER BY t.created_at DESC
 LIMIT $1;
 
 -- name: ListBoardroomThreads :many
-SELECT t.*, u.full_name as author_name, u.role as author_role,
+SELECT t.*, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         ELSE 'investor'::user_role
+       END)::user_role as author_role,
        (SELECT COUNT(1) FROM community_comments c WHERE c.thread_id = t.id) as comment_count
 FROM community_threads t
 JOIN users u ON t.author_id = u.id
+JOIN smes s ON t.sme_id = s.id
 WHERE t.visibility = 'private_boardroom' AND t.sme_id = $1
 ORDER BY t.created_at DESC
 LIMIT $2;
@@ -80,9 +93,17 @@ INSERT INTO community_comments (
 ) RETURNING *;
 
 -- name: ListCommentsByThread :many
-SELECT c.*, u.full_name as author_name, u.role as author_role
+SELECT c.*, u.full_name as author_name,
+       (CASE 
+         WHEN u.role = 'admin' THEN 'admin'::user_role
+         WHEN s.owner_id = u.id THEN 'sme_owner'::user_role
+         WHEN t.visibility = 'private_boardroom' THEN 'investor'::user_role
+         ELSE u.role
+       END)::user_role as author_role
 FROM community_comments c
 JOIN users u ON c.author_id = u.id
+JOIN community_threads t ON c.thread_id = t.id
+LEFT JOIN smes s ON t.sme_id = s.id
 WHERE c.thread_id = $1
 ORDER BY c.created_at ASC;
 

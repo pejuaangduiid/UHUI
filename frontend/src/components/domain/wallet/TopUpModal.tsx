@@ -58,62 +58,62 @@ export function TopUpModal({ isOpen, onClose }: TopUpModalProps) {
         </button>
 
         <div className="flex items-center gap-3 mb-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25">
-            <Wallet className="h-5 w-5" />
-          </div>
-          <div>
-            <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Isi Saldo Simulasi</h3>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">Saldo virtual sandbox untuk bursa &amp; kursus</p>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-white/[0.05] mb-5">
-          <span className="text-[11px] text-slate-400 font-medium">Saldo Saat Ini</span>
-          <div className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">{formatIDR(balance)}</div>
-        </div>
-
-        {success ? (
-          <div className="py-6 text-center space-y-2">
-            <CheckCircle className="h-10 w-10 text-blue-500 mx-auto animate-bounce" />
-            <h4 className="font-bold text-sm text-slate-900 dark:text-white">Top Up Berhasil!</h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Saldo bertambah {formatIDR(selectedAmount)}</p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-2">
-                Pilih Nominal Tambahan
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {PRESETS.map((amt) => (
-                  <button
-                    key={amt}
-                    type="button"
-                    onClick={() => setSelectedAmount(amt)}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold transition border ${selectedAmount === amt
-                      ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-950/40 dark:text-blue-300"
-                      : "border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 text-slate-700 dark:text-slate-300"
-                      }`}
-                  >
-                    +{formatIDR(amt)}
-                  </button>
-                ))}
-              </div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#1D5FAE] text-white shadow-sm">
+              <Wallet className="h-5 w-5" />
             </div>
-
-            <button
-              type="button"
-              disabled={isTopUpPending}
-              onClick={handleTopUp}
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-blue-500/25 transition disabled:opacity-50"
-            >
-              <Sparkles className="h-4 w-4" />
-              <span>{isTopUpPending ? "Memproses..." : `Top Up ${formatIDR(selectedAmount)}`}</span>
-            </button>
+            <div>
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Isi Saldo Simulasi</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Saldo virtual sandbox untuk bursa &amp; kursus</p>
+            </div>
           </div>
-        )}
-      </div>
-    </div>,
-    document.body
-  );
+
+          <div className="rounded-2xl bg-slate-50 dark:bg-slate-800/50 p-4 border border-slate-100 dark:border-white/[0.05] mb-5">
+            <span className="text-[11px] text-slate-400 font-medium">Saldo Saat Ini</span>
+            <div className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">{formatIDR(balance)}</div>
+          </div>
+
+          {success ? (
+            <div className="py-6 text-center space-y-2">
+              <CheckCircle className="h-10 w-10 text-[#1D5FAE] mx-auto animate-bounce" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Top Up Berhasil!</h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Saldo bertambah {formatIDR(selectedAmount)}</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-2">
+                  Pilih Nominal Tambahan
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {PRESETS.map((amt) => (
+                    <button
+                      key={amt}
+                      type="button"
+                      onClick={() => setSelectedAmount(amt)}
+                      className={`py-2 px-3 rounded-xl text-xs font-bold transition border ${selectedAmount === amt
+                          ? "border-[#1D5FAE] bg-[#DFE9F1] text-[#1D5FAE] dark:border-blue-500 dark:bg-blue-950/40 dark:text-blue-300"
+                          : "border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 text-slate-700 dark:text-slate-300"
+                      }`}
+                    >
+                      +{formatIDR(amt)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                disabled={isTopUpPending}
+                onClick={handleTopUp}
+                className="w-full flex items-center justify-center gap-2 bg-[#1D5FAE] hover:bg-[#184e91] text-white font-bold py-2.5 rounded-xl text-xs shadow-sm transition disabled:opacity-50"
+              >
+                <Sparkles className="h-4 w-4" />
+                <span>{isTopUpPending ? "Memproses..." : `Top Up ${formatIDR(selectedAmount)}`}</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>,
+      document.body
+      );
 }

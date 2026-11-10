@@ -17,7 +17,7 @@ SET raised_amount_idr = raised_amount_idr + $2,
     status = CASE WHEN raised_amount_idr + $2 >= target_amount_idr THEN 'funded'::campaign_status ELSE status END,
     funded_at = CASE WHEN raised_amount_idr + $2 >= target_amount_idr AND funded_at IS NULL THEN NOW() ELSE funded_at END
 WHERE id = $1
-RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason
+RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code
 `
 
 type AddCampaignRaisedAmountParams struct {
@@ -48,6 +48,8 @@ func (q *Queries) AddCampaignRaisedAmount(ctx context.Context, arg AddCampaignRa
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }
@@ -74,23 +76,27 @@ func (q *Queries) CheckActiveCampaignExists(ctx context.Context, arg CheckActive
 const createCampaign = `-- name: CreateCampaign :one
 INSERT INTO bursa_campaigns (
   sme_id, slug, title, scheme, target_amount_idr,
-  min_investment_idr, return_share_bps, term_months, closes_at
+  min_investment_idr, return_share_bps, term_months, closes_at,
+  scf_partner_id, ojk_registered_code
 ) VALUES (
   $1, $2, $3, $4, $5,
-  $6, $7, $8, $9
-) RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason
+  $6, $7, $8, $9,
+  $10, $11
+) RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code
 `
 
 type CreateCampaignParams struct {
-	SmeID            pgtype.UUID        `json:"sme_id"`
-	Slug             string             `json:"slug"`
-	Title            string             `json:"title"`
-	Scheme           FundingScheme      `json:"scheme"`
-	TargetAmountIdr  int64              `json:"target_amount_idr"`
-	MinInvestmentIdr int64              `json:"min_investment_idr"`
-	ReturnShareBps   int16              `json:"return_share_bps"`
-	TermMonths       int16              `json:"term_months"`
-	ClosesAt         pgtype.Timestamptz `json:"closes_at"`
+	SmeID             pgtype.UUID        `json:"sme_id"`
+	Slug              string             `json:"slug"`
+	Title             string             `json:"title"`
+	Scheme            FundingScheme      `json:"scheme"`
+	TargetAmountIdr   int64              `json:"target_amount_idr"`
+	MinInvestmentIdr  int64              `json:"min_investment_idr"`
+	ReturnShareBps    int16              `json:"return_share_bps"`
+	TermMonths        int16              `json:"term_months"`
+	ClosesAt          pgtype.Timestamptz `json:"closes_at"`
+	ScfPartnerID      pgtype.UUID        `json:"scf_partner_id"`
+	OjkRegisteredCode pgtype.Text        `json:"ojk_registered_code"`
 }
 
 func (q *Queries) CreateCampaign(ctx context.Context, arg CreateCampaignParams) (BursaCampaign, error) {
@@ -104,6 +110,8 @@ func (q *Queries) CreateCampaign(ctx context.Context, arg CreateCampaignParams) 
 		arg.ReturnShareBps,
 		arg.TermMonths,
 		arg.ClosesAt,
+		arg.ScfPartnerID,
+		arg.OjkRegisteredCode,
 	)
 	var i BursaCampaign
 	err := row.Scan(
@@ -126,6 +134,8 @@ func (q *Queries) CreateCampaign(ctx context.Context, arg CreateCampaignParams) 
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }
@@ -259,7 +269,7 @@ func (q *Queries) FindInvestmentByIdempotencyKey(ctx context.Context, arg FindIn
 }
 
 const getCampaignByID = `-- name: GetCampaignByID :one
-SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason FROM bursa_campaigns
+SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code FROM bursa_campaigns
 WHERE id = $1
 `
 
@@ -286,12 +296,14 @@ func (q *Queries) GetCampaignByID(ctx context.Context, id pgtype.UUID) (BursaCam
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }
 
 const getCampaignByIDForUpdate = `-- name: GetCampaignByIDForUpdate :one
-SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason FROM bursa_campaigns
+SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code FROM bursa_campaigns
 WHERE id = $1
 FOR UPDATE
 `
@@ -319,14 +331,18 @@ func (q *Queries) GetCampaignByIDForUpdate(ctx context.Context, id pgtype.UUID) 
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }
 
 const getCampaignBySlug = `-- name: GetCampaignBySlug :one
-SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, s.business_name, s.sector, s.description as sme_description, s.is_incorporated_pt, s.digital_readiness_score as latest_readiness_score
+SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, c.scf_partner_id, c.ojk_registered_code, s.business_name, s.sector, s.description as sme_description, s.is_incorporated_pt, s.digital_readiness_score as latest_readiness_score,
+       p.brand_name as scf_partner_name, p.license_number as scf_license_number, p.website_url as scf_website_url
 FROM bursa_campaigns c
 JOIN smes s ON c.sme_id = s.id
+LEFT JOIN ojk_licensed_entities p ON c.scf_partner_id = p.id
 WHERE c.slug = $1
 `
 
@@ -350,11 +366,16 @@ type GetCampaignBySlugRow struct {
 	CreatedAt            pgtype.Timestamptz `json:"created_at"`
 	IsSuspended          bool               `json:"is_suspended"`
 	SuspensionReason     pgtype.Text        `json:"suspension_reason"`
+	ScfPartnerID         pgtype.UUID        `json:"scf_partner_id"`
+	OjkRegisteredCode    pgtype.Text        `json:"ojk_registered_code"`
 	BusinessName         string             `json:"business_name"`
 	Sector               string             `json:"sector"`
 	SmeDescription       string             `json:"sme_description"`
 	IsIncorporatedPt     bool               `json:"is_incorporated_pt"`
 	LatestReadinessScore pgtype.Int2        `json:"latest_readiness_score"`
+	ScfPartnerName       pgtype.Text        `json:"scf_partner_name"`
+	ScfLicenseNumber     pgtype.Text        `json:"scf_license_number"`
+	ScfWebsiteUrl        pgtype.Text        `json:"scf_website_url"`
 }
 
 func (q *Queries) GetCampaignBySlug(ctx context.Context, slug string) (GetCampaignBySlugRow, error) {
@@ -380,11 +401,16 @@ func (q *Queries) GetCampaignBySlug(ctx context.Context, slug string) (GetCampai
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 		&i.BusinessName,
 		&i.Sector,
 		&i.SmeDescription,
 		&i.IsIncorporatedPt,
 		&i.LatestReadinessScore,
+		&i.ScfPartnerName,
+		&i.ScfLicenseNumber,
+		&i.ScfWebsiteUrl,
 	)
 	return i, err
 }
@@ -410,7 +436,7 @@ func (q *Queries) HasConfirmedInvestmentOnSME(ctx context.Context, arg HasConfir
 }
 
 const listCampaignsBySME = `-- name: ListCampaignsBySME :many
-SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason FROM bursa_campaigns
+SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code FROM bursa_campaigns
 WHERE sme_id = $1
 ORDER BY created_at DESC
 `
@@ -444,6 +470,8 @@ func (q *Queries) ListCampaignsBySME(ctx context.Context, smeID pgtype.UUID) ([]
 			&i.CreatedAt,
 			&i.IsSuspended,
 			&i.SuspensionReason,
+			&i.ScfPartnerID,
+			&i.OjkRegisteredCode,
 		); err != nil {
 			return nil, err
 		}
@@ -535,7 +563,7 @@ func (q *Queries) ListDistributionItemsByDistributionID(ctx context.Context, dis
 }
 
 const listExpiredOpenCampaigns = `-- name: ListExpiredOpenCampaigns :many
-SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason FROM bursa_campaigns
+SELECT id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code FROM bursa_campaigns
 WHERE status = 'open' AND closes_at <= NOW() AND raised_amount_idr < target_amount_idr
 ORDER BY closes_at ASC
 LIMIT 50
@@ -570,6 +598,8 @@ func (q *Queries) ListExpiredOpenCampaigns(ctx context.Context) ([]BursaCampaign
 			&i.CreatedAt,
 			&i.IsSuspended,
 			&i.SuspensionReason,
+			&i.ScfPartnerID,
+			&i.OjkRegisteredCode,
 		); err != nil {
 			return nil, err
 		}
@@ -582,7 +612,7 @@ func (q *Queries) ListExpiredOpenCampaigns(ctx context.Context) ([]BursaCampaign
 }
 
 const listInReviewCampaigns = `-- name: ListInReviewCampaigns :many
-SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, s.business_name, s.sector, s.slug as sme_slug, u.email as owner_email, u.full_name as owner_name
+SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, c.scf_partner_id, c.ojk_registered_code, s.business_name, s.sector, s.slug as sme_slug, u.email as owner_email, u.full_name as owner_name
 FROM bursa_campaigns c
 JOIN smes s ON c.sme_id = s.id
 JOIN users u ON s.owner_id = u.id
@@ -591,30 +621,32 @@ ORDER BY c.created_at ASC
 `
 
 type ListInReviewCampaignsRow struct {
-	ID               pgtype.UUID        `json:"id"`
-	SmeID            pgtype.UUID        `json:"sme_id"`
-	ReadinessScoreID pgtype.UUID        `json:"readiness_score_id"`
-	Slug             string             `json:"slug"`
-	Title            string             `json:"title"`
-	Scheme           FundingScheme      `json:"scheme"`
-	TargetAmountIdr  int64              `json:"target_amount_idr"`
-	RaisedAmountIdr  int64              `json:"raised_amount_idr"`
-	MinInvestmentIdr int64              `json:"min_investment_idr"`
-	ReturnShareBps   int16              `json:"return_share_bps"`
-	TermMonths       int16              `json:"term_months"`
-	Status           CampaignStatus     `json:"status"`
-	ReviewedBy       pgtype.UUID        `json:"reviewed_by"`
-	ReviewNote       pgtype.Text        `json:"review_note"`
-	FundedAt         pgtype.Timestamptz `json:"funded_at"`
-	ClosesAt         pgtype.Timestamptz `json:"closes_at"`
-	CreatedAt        pgtype.Timestamptz `json:"created_at"`
-	IsSuspended      bool               `json:"is_suspended"`
-	SuspensionReason pgtype.Text        `json:"suspension_reason"`
-	BusinessName     string             `json:"business_name"`
-	Sector           string             `json:"sector"`
-	SmeSlug          string             `json:"sme_slug"`
-	OwnerEmail       string             `json:"owner_email"`
-	OwnerName        string             `json:"owner_name"`
+	ID                pgtype.UUID        `json:"id"`
+	SmeID             pgtype.UUID        `json:"sme_id"`
+	ReadinessScoreID  pgtype.UUID        `json:"readiness_score_id"`
+	Slug              string             `json:"slug"`
+	Title             string             `json:"title"`
+	Scheme            FundingScheme      `json:"scheme"`
+	TargetAmountIdr   int64              `json:"target_amount_idr"`
+	RaisedAmountIdr   int64              `json:"raised_amount_idr"`
+	MinInvestmentIdr  int64              `json:"min_investment_idr"`
+	ReturnShareBps    int16              `json:"return_share_bps"`
+	TermMonths        int16              `json:"term_months"`
+	Status            CampaignStatus     `json:"status"`
+	ReviewedBy        pgtype.UUID        `json:"reviewed_by"`
+	ReviewNote        pgtype.Text        `json:"review_note"`
+	FundedAt          pgtype.Timestamptz `json:"funded_at"`
+	ClosesAt          pgtype.Timestamptz `json:"closes_at"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	IsSuspended       bool               `json:"is_suspended"`
+	SuspensionReason  pgtype.Text        `json:"suspension_reason"`
+	ScfPartnerID      pgtype.UUID        `json:"scf_partner_id"`
+	OjkRegisteredCode pgtype.Text        `json:"ojk_registered_code"`
+	BusinessName      string             `json:"business_name"`
+	Sector            string             `json:"sector"`
+	SmeSlug           string             `json:"sme_slug"`
+	OwnerEmail        string             `json:"owner_email"`
+	OwnerName         string             `json:"owner_name"`
 }
 
 func (q *Queries) ListInReviewCampaigns(ctx context.Context) ([]ListInReviewCampaignsRow, error) {
@@ -646,6 +678,8 @@ func (q *Queries) ListInReviewCampaigns(ctx context.Context) ([]ListInReviewCamp
 			&i.CreatedAt,
 			&i.IsSuspended,
 			&i.SuspensionReason,
+			&i.ScfPartnerID,
+			&i.OjkRegisteredCode,
 			&i.BusinessName,
 			&i.Sector,
 			&i.SmeSlug,
@@ -729,7 +763,7 @@ func (q *Queries) ListInvestorPortfolio(ctx context.Context, investorID pgtype.U
 }
 
 const listOpenCampaigns = `-- name: ListOpenCampaigns :many
-SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, s.business_name, s.sector, s.slug as sme_slug, s.digital_readiness_score as latest_readiness_score, s.is_incorporated_pt
+SELECT c.id, c.sme_id, c.readiness_score_id, c.slug, c.title, c.scheme, c.target_amount_idr, c.raised_amount_idr, c.min_investment_idr, c.return_share_bps, c.term_months, c.status, c.reviewed_by, c.review_note, c.funded_at, c.closes_at, c.created_at, c.is_suspended, c.suspension_reason, c.scf_partner_id, c.ojk_registered_code, s.business_name, s.sector, s.slug as sme_slug, s.digital_readiness_score as latest_readiness_score, s.is_incorporated_pt
 FROM bursa_campaigns c
 JOIN smes s ON c.sme_id = s.id
 WHERE c.status = 'open'
@@ -765,6 +799,8 @@ type ListOpenCampaignsRow struct {
 	CreatedAt            pgtype.Timestamptz `json:"created_at"`
 	IsSuspended          bool               `json:"is_suspended"`
 	SuspensionReason     pgtype.Text        `json:"suspension_reason"`
+	ScfPartnerID         pgtype.UUID        `json:"scf_partner_id"`
+	OjkRegisteredCode    pgtype.Text        `json:"ojk_registered_code"`
 	BusinessName         string             `json:"business_name"`
 	Sector               string             `json:"sector"`
 	SmeSlug              string             `json:"sme_slug"`
@@ -801,6 +837,8 @@ func (q *Queries) ListOpenCampaigns(ctx context.Context, arg ListOpenCampaignsPa
 			&i.CreatedAt,
 			&i.IsSuspended,
 			&i.SuspensionReason,
+			&i.ScfPartnerID,
+			&i.OjkRegisteredCode,
 			&i.BusinessName,
 			&i.Sector,
 			&i.SmeSlug,
@@ -866,7 +904,7 @@ const submitCampaignForReview = `-- name: SubmitCampaignForReview :one
 UPDATE bursa_campaigns
 SET status = 'in_review', readiness_score_id = $2
 WHERE id = $1 AND status = 'draft'
-RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason
+RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code
 `
 
 type SubmitCampaignForReviewParams struct {
@@ -897,6 +935,8 @@ func (q *Queries) SubmitCampaignForReview(ctx context.Context, arg SubmitCampaig
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }
@@ -905,7 +945,7 @@ const updateCampaignStatus = `-- name: UpdateCampaignStatus :one
 UPDATE bursa_campaigns
 SET status = $2, review_note = $3, reviewed_by = $4, funded_at = $5
 WHERE id = $1
-RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason
+RETURNING id, sme_id, readiness_score_id, slug, title, scheme, target_amount_idr, raised_amount_idr, min_investment_idr, return_share_bps, term_months, status, reviewed_by, review_note, funded_at, closes_at, created_at, is_suspended, suspension_reason, scf_partner_id, ojk_registered_code
 `
 
 type UpdateCampaignStatusParams struct {
@@ -945,6 +985,8 @@ func (q *Queries) UpdateCampaignStatus(ctx context.Context, arg UpdateCampaignSt
 		&i.CreatedAt,
 		&i.IsSuspended,
 		&i.SuspensionReason,
+		&i.ScfPartnerID,
+		&i.OjkRegisteredCode,
 	)
 	return i, err
 }

@@ -130,7 +130,7 @@ export default function SMEProfilePage() {
           <button
             type="submit"
             disabled={updateProfile.isPending}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-xl bg-[#1D5FAE] hover:bg-[#184e91] px-5 py-2.5 text-xs font-bold text-white shadow-sm transition disabled:opacity-50"
           >
             {updateProfile.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : saved ? <CheckCircle2 className="h-4 w-4 text-white" /> : <Save className="h-4 w-4" />}
             {saved ? "Tersimpan!" : "Simpan Perubahan"}

@@ -17,6 +17,8 @@ type Config struct {
 	TrustedProxies  []string
 	CookieInsecure  bool
 	AutoMigrate     bool
+	GeminiAPIKey    string
+	GeminiModel     string
 }
 
 func Load() (*Config, error) {
@@ -33,6 +35,8 @@ func Load() (*Config, error) {
 		AllowedOrigin:   getEnv("ALLOWED_ORIGIN", "http://localhost:3000"),
 		CookieInsecure:  getEnv("COOKIE_INSECURE_DEV", "false") == "true",
 		AutoMigrate:     getEnv("AUTO_MIGRATE", "false") == "true",
+		GeminiAPIKey:    os.Getenv("GEMINI_API_KEY"),
+		GeminiModel:     getEnv("GEMINI_MODEL", "gemini-3.5-flash-lite"),
 	}
 
 	if err := cfg.validate(); err != nil {

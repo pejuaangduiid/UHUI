@@ -53,8 +53,8 @@ export function WebinarListSection({
                 disabled={isDone || isPending}
                 onClick={() => onRegister(w.id)}
                 className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-[11px] text-xs font-semibold transition shadow-sm active:scale-[0.985] ${isDone
-                  ? "bg-[#DFE9F1] text-[#00478C] dark:bg-blue-950/60 dark:text-blue-300 border border-[#B9C8DD] dark:border-blue-900/40"
-                  : "bg-[#1D5FAE] hover:bg-[#184e91] text-white"
+                    ? "bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300 border border-[#B9C8DD] dark:border-blue-900/40"
+                    : "bg-[#1D5FAE] hover:bg-[#184e91] text-white"
                   }`}
               >
                 {isDone ? <CheckCircle className="h-3.5 w-3.5" /> : null}

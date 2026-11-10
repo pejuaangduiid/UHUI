@@ -295,25 +295,27 @@ type AuditLog struct {
 }
 
 type BursaCampaign struct {
-	ID               pgtype.UUID        `json:"id"`
-	SmeID            pgtype.UUID        `json:"sme_id"`
-	ReadinessScoreID pgtype.UUID        `json:"readiness_score_id"`
-	Slug             string             `json:"slug"`
-	Title            string             `json:"title"`
-	Scheme           FundingScheme      `json:"scheme"`
-	TargetAmountIdr  int64              `json:"target_amount_idr"`
-	RaisedAmountIdr  int64              `json:"raised_amount_idr"`
-	MinInvestmentIdr int64              `json:"min_investment_idr"`
-	ReturnShareBps   int16              `json:"return_share_bps"`
-	TermMonths       int16              `json:"term_months"`
-	Status           CampaignStatus     `json:"status"`
-	ReviewedBy       pgtype.UUID        `json:"reviewed_by"`
-	ReviewNote       pgtype.Text        `json:"review_note"`
-	FundedAt         pgtype.Timestamptz `json:"funded_at"`
-	ClosesAt         pgtype.Timestamptz `json:"closes_at"`
-	CreatedAt        pgtype.Timestamptz `json:"created_at"`
-	IsSuspended      bool               `json:"is_suspended"`
-	SuspensionReason pgtype.Text        `json:"suspension_reason"`
+	ID                pgtype.UUID        `json:"id"`
+	SmeID             pgtype.UUID        `json:"sme_id"`
+	ReadinessScoreID  pgtype.UUID        `json:"readiness_score_id"`
+	Slug              string             `json:"slug"`
+	Title             string             `json:"title"`
+	Scheme            FundingScheme      `json:"scheme"`
+	TargetAmountIdr   int64              `json:"target_amount_idr"`
+	RaisedAmountIdr   int64              `json:"raised_amount_idr"`
+	MinInvestmentIdr  int64              `json:"min_investment_idr"`
+	ReturnShareBps    int16              `json:"return_share_bps"`
+	TermMonths        int16              `json:"term_months"`
+	Status            CampaignStatus     `json:"status"`
+	ReviewedBy        pgtype.UUID        `json:"reviewed_by"`
+	ReviewNote        pgtype.Text        `json:"review_note"`
+	FundedAt          pgtype.Timestamptz `json:"funded_at"`
+	ClosesAt          pgtype.Timestamptz `json:"closes_at"`
+	CreatedAt         pgtype.Timestamptz `json:"created_at"`
+	IsSuspended       bool               `json:"is_suspended"`
+	SuspensionReason  pgtype.Text        `json:"suspension_reason"`
+	ScfPartnerID      pgtype.UUID        `json:"scf_partner_id"`
+	OjkRegisteredCode pgtype.Text        `json:"ojk_registered_code"`
 }
 
 type CommunityComment struct {
@@ -442,6 +444,26 @@ type Investment struct {
 	RequestHash    []byte             `json:"request_hash"`
 	PaymentRef     pgtype.Text        `json:"payment_ref"`
 	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+}
+
+type OjkIllegalEntity struct {
+	ID             pgtype.UUID        `json:"id"`
+	EntityName     string             `json:"entity_name"`
+	EntityAliases  []string           `json:"entity_aliases"`
+	ActivityType   pgtype.Text        `json:"activity_type"`
+	SuspicionNotes pgtype.Text        `json:"suspicion_notes"`
+	LastSyncedAt   pgtype.Timestamptz `json:"last_synced_at"`
+}
+
+type OjkLicensedEntity struct {
+	ID            pgtype.UUID        `json:"id"`
+	EntityName    string             `json:"entity_name"`
+	BrandName     string             `json:"brand_name"`
+	LicenseNumber pgtype.Text        `json:"license_number"`
+	EntityType    string             `json:"entity_type"`
+	WebsiteUrl    pgtype.Text        `json:"website_url"`
+	IsActive      pgtype.Bool        `json:"is_active"`
+	LastSyncedAt  pgtype.Timestamptz `json:"last_synced_at"`
 }
 
 type OperationalTransaction struct {

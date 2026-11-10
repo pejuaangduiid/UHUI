@@ -9,6 +9,7 @@ import { BursaChartTab } from "@/components/domain/bursa/BursaChartTab";
 import { BursaDocumentTab } from "@/components/domain/bursa/BursaDocumentTab";
 import { BursaBoardroomTab } from "@/components/domain/bursa/BursaBoardroomTab";
 import { BursaExchangeWidget } from "@/components/domain/bursa/BursaExchangeWidget";
+import { OjkComplianceBadge } from "@/components/domain/bursa/OjkComplianceBadge";
 import { LineChart, FileText, Lock, ShieldCheck } from "lucide-react";
 
 export default function CampaignDetailPage() {
@@ -49,19 +50,14 @@ export default function CampaignDetailPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-200 dark:border-white/[0.08]">
         <div>
           <div className="flex flex-wrap items-center gap-2 text-xs mb-1">
-            <span className="font-semibold uppercase text-blue-500 px-2.5 py-0.5 bg-blue-500/10 rounded-full">
-              {campaign.sector}
-            </span>
-            <span className="text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">
-              Terdaftar di UHUI
-            </span>
+            <span className="font-semibold uppercase text-blue-500 px-2.5 py-0.5 bg-blue-500/10 rounded-full">{campaign.sector}</span>
+            <span className="text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">Terdaftar di UHUI</span>
             <span className="text-slate-400">&bull;</span>
             <span className="text-slate-500 dark:text-slate-400 font-medium">{campaign.business_name}</span>
             {campaign.is_incorporated_pt && (
-              <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">
-                PT Terverifikasi
-              </span>
+              <span className="text-[10px] font-bold bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/20">PT Terverifikasi</span>
             )}
+            <OjkComplianceBadge partnerName={campaign.scf_partner_name} licenseNumber={campaign.scf_license_number} websiteUrl={campaign.scf_website_url} ojkCode={campaign.ojk_registered_code} />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             {campaign.title}

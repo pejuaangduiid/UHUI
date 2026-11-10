@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Receipt, CandlestickChart, Users2, GraduationCap } from "lucide-react";
+import { OjkScfSection } from "@/components/home/OjkScfSection";
 
 export default function Home() {
   const cards = [
@@ -80,6 +81,7 @@ export default function Home() {
             </div>
           </section>
       </div>
+      <OjkScfSection />
     </div>
   );
 }

@@ -72,53 +72,53 @@ export default function SmeCourseDetailPage() {
         <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{course.description}</p>
 
         {isEnrolled ? (
-          <div className="flex items-center gap-2 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3.5 py-2 rounded-xl">
-            <CheckCircle className="h-4 w-4" />
-            <span>Status: Akses Kursus Terbuka • Anda telah memiliki kursus ini</span>
-          </div>
-        ) : (
-          <div className="pt-3 border-t border-slate-100 dark:border-white/[0.05] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div>
-              <div className="text-[11px] text-slate-400 font-medium">Biaya Pendaftaran Kursus</div>
-              <div className="text-xl font-extrabold text-blue-600 dark:text-blue-400">
-                {isFree ? "Gratis" : formatIDR(course.price_idr)}
-              </div>
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#1D5FAE] dark:text-blue-300 bg-[#DFE9F1] dark:bg-blue-950/60 border border-[#B9C8DD] dark:border-blue-900/40 px-3.5 py-2 rounded-xl">
+              <CheckCircle className="h-4 w-4" />
+              <span>Status: Akses Kursus Terbuka • Anda telah memiliki kursus ini</span>
             </div>
+            ) : (
+            <div className="pt-3 border-t border-slate-100 dark:border-white/[0.05] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <div className="text-[11px] text-slate-400 font-medium">Biaya Pendaftaran Kursus</div>
+                  <div className="text-xl font-extrabold text-[#1D5FAE] dark:text-blue-400">
+                    {isFree ? "Gratis" : formatIDR(course.price_idr)}
+                  </div>
+                </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="text-[11px] text-slate-400 flex items-center gap-1 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-xl border border-slate-100 dark:border-white/5">
-                <Wallet className="h-3.5 w-3.5 text-blue-500" />
-                <span>Saldo Anda:</span>
-                <span className="font-bold text-slate-700 dark:text-slate-200">{formatIDR(balance)}</span>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <div className="text-[11px] text-slate-400 flex items-center gap-1 bg-slate-50 dark:bg-slate-800 px-3 py-2 rounded-xl border border-slate-100 dark:border-white/5">
+                    <Wallet className="h-3.5 w-3.5 text-[#1D5FAE]" />
+                    <span>Saldo Anda:</span>
+                    <span className="font-bold text-slate-700 dark:text-slate-200">{formatIDR(balance)}</span>
+                  </div>
+
+                  {!isFree && !canAfford ? (
+                    <button
+                      type="button"
+                      onClick={() => setTopUpOpen(true)}
+                      className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5"
+                    >
+                      <Wallet className="h-3.5 w-3.5" />
+                      <span>Saldo Kurang • Top Up Saldo</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={enrollMutation.isPending}
+                      onClick={handleEnroll}
+                      className="bg-[#1D5FAE] hover:bg-[#184e91] text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      <span>{enrollMutation.isPending ? "Memproses..." : isFree ? "Daftar Gratis" : "Beli Kursus dengan Saldo"}</span>
+                    </button>
+                  )}
+                </div>
               </div>
-
-              {!isFree && !canAfford ? (
-                <button
-                  type="button"
-                  onClick={() => setTopUpOpen(true)}
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-1.5"
-                >
-                  <Wallet className="h-3.5 w-3.5" />
-                  <span>Saldo Kurang • Top Up Saldo</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  disabled={enrollMutation.isPending}
-                  onClick={handleEnroll}
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-blue-500/25 flex items-center gap-1.5"
-                >
-                  <Sparkles className="h-3.5 w-3.5" />
-                  <span>{enrollMutation.isPending ? "Memproses..." : isFree ? "Daftar Gratis" : "Beli Kursus dengan Saldo"}</span>
-                </button>
-              )}
-            </div>
-          </div>
         )}
-      </div>
+            </div>
 
-      <LessonViewer lessons={course.lessons ?? []} isEnrolled={isEnrolled} />
-      <TopUpModal isOpen={topUpOpen} onClose={() => setTopUpOpen(false)} />
-    </div>
-  );
+            <LessonViewer lessons={course.lessons ?? []} isEnrolled={isEnrolled} />
+            <TopUpModal isOpen={topUpOpen} onClose={() => setTopUpOpen(false)} />
+          </div>
+        );
 }

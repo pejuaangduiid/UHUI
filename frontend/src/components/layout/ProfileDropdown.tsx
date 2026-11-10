@@ -50,10 +50,10 @@ export function ProfileDropdown({
         aria-expanded={isOpen}
         className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/80 p-1 pl-1.5 pr-2 shadow-sm transition hover:bg-slate-100 dark:border-white/10 dark:bg-[#121827]/80 dark:hover:bg-slate-800"
       >
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1D5FAE] text-xs font-bold text-white shadow-sm">
-            {user.full_name?.charAt(0).toUpperCase() || "U"}
-          </div>
-          <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1D5FAE] text-xs font-bold text-white shadow-sm">
+          {user.full_name?.charAt(0).toUpperCase() || "U"}
+        </div>
+        <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
@@ -63,12 +63,12 @@ export function ProfileDropdown({
               {user.full_name}
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="rounded bg-[#DFE9F1] dark:bg-blue-950/60 px-1.5 py-0.5 text-[9px] font-semibold text-[#1D5FAE] dark:text-blue-300">
-                  {roleLabel}
-                </span>
-                <span className="text-[11px] text-slate-400 truncate">
-                  {user.email}
-                </span>
+              <span className="rounded bg-[#DFE9F1] dark:bg-blue-950/60 px-1.5 py-0.5 text-[9px] font-semibold text-[#1D5FAE] dark:text-blue-300">
+                {roleLabel}
+              </span>
+              <span className="text-[11px] text-slate-400 truncate">
+                {user.email}
+              </span>
             </div>
           </div>
 
@@ -100,7 +100,7 @@ export function ProfileDropdown({
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/60 transition"
             >
-              <LayoutDashboard className="h-4 w-4 text-blue-500" />
+              <LayoutDashboard className="h-4 w-4 text-[#1D5FAE]" />
               <span>Buka Dashboard</span>
             </Link>
 
@@ -109,7 +109,7 @@ export function ProfileDropdown({
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/60 transition"
             >
-              <TrendingUp className="h-4 w-4 text-indigo-500" />
+              <TrendingUp className="h-4 w-4 text-[#1D5FAE]" />
               <span>Bursa &amp; Saham Saya</span>
             </Link>
           </div>

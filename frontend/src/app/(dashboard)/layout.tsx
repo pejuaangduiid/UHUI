@@ -27,12 +27,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     if (pathname.startsWith("/admin") && !isAdmin) {
       router.replace("/sme");
     }
-}, [mounted, user, role, isLoading, pathname, router]);
+  }, [mounted, user, role, isLoading, pathname, router]);
 
   if (!mounted || isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-950">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#1D5FAE] border-t-transparent" />
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </p>
         <a
           href={`/login?next=${encodeURIComponent(pathname)}`}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+          className="rounded-lg bg-[#1D5FAE] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#184e91]"
         >
           Masuk ke Akun
         </a>

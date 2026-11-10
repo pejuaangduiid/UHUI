@@ -38,9 +38,9 @@ export default function SmeKursusDashboardPage() {
             <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Akademi &amp; Kursus Bisnis
             </h1>
-            <span className="text-[11px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full">
-              SAK EMKM
-            </span>
+              <span className="text-[11px] font-bold bg-[#DFE9F1] dark:bg-blue-950/60 text-[#1D5FAE] dark:text-blue-300 border border-[#B9C8DD] dark:border-blue-900/40 px-2.5 py-0.5 rounded-full">
+                SAK EMKM
+              </span>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Pelajari tata kelola usaha, modul akuntansi, dan ikuti kelas terverifikasi.
@@ -54,8 +54,8 @@ export default function SmeKursusDashboardPage() {
           type="button"
           onClick={() => setActiveTab("semua")}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "semua"
-            ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm"
-            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              ? "bg-white dark:bg-slate-800 text-[#1D5FAE] dark:text-blue-300 shadow-sm"
+              : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
         >
           <BookOpen className="h-3.5 w-3.5" />
@@ -65,18 +65,18 @@ export default function SmeKursusDashboardPage() {
           type="button"
           onClick={() => setActiveTab("saya")}
           className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all ${activeTab === "saya"
-            ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm"
-            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              ? "bg-white dark:bg-slate-800 text-[#1D5FAE] dark:text-blue-300 shadow-sm"
+              : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             }`}
         >
           <CheckCircle2 className="h-3.5 w-3.5" />
           <span>Kursus Saya</span>
           {enrolledCount > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-extrabold">
-              {enrolledCount}
-            </span>
+              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-[#DFE9F1] dark:bg-blue-950 text-[#1D5FAE] dark:text-blue-300 font-extrabold">
+                {enrolledCount}
+              </span>
           )}
-        </button>
+            </button>
       </div>
 
       {activeTab === "semua" ? (
