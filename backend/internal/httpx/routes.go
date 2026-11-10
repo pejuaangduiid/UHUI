@@ -34,7 +34,7 @@ type Dependencies struct {
 func RegisterRoutes(api huma.API, pool *pgxpool.Pool, cfg *config.Config, tm *middleware.TokenManager, deps ...Dependencies) {
 	RegisterHealth(api, pool)
 
-	d := resolveDependencies(deps...)
+	d := resolveDependencies(cfg, deps...)
 
 	authSvc := auth.NewService(pool, tm)
 	auth.RegisterHandlers(api, authSvc, cfg)
@@ -103,13 +103,23 @@ func registerBursaAndCommunity(api huma.API, pool *pgxpool.Pool, q *gen.Queries,
 	aicopilot.RegisterShareReport(api, aiSvc, commSvc, pool)
 }
 
-func resolveDependencies(deps ...Dependencies) Dependencies {
+func resolveDependencies(cfg *config.Config, deps ...Dependencies) Dependencies {
 	var d Dependencies
 	if len(deps) > 0 {
 		d = deps[0]
 	}
 	if d.Store == nil {
-		d.Store, _ = storage.NewLocalFS("./tmp/storage", []byte("uhui-dev-storage-secret-key-1234"), "http://localhost:8080/api/v1/storage/dev")
+		storageDir := "./tmp/storage"
+		publicBaseURL := "http://localhost:8080/api/v1/storage/dev"
+		if cfg != nil {
+			if cfg.StorageLocalDir != "" {
+				storageDir = cfg.StorageLocalDir
+			}
+			if cfg.StoragePublicBaseURL != "" {
+				publicBaseURL = cfg.StoragePublicBaseURL
+			}
+		}
+		d.Store, _ = storage.NewLocalFS(storageDir, []byte("uhui-dev-storage-secret-key-1234"), publicBaseURL)
 	}
 	if d.LLMClient == nil {
 		d.LLMClient = llm.NewFakeLLM()

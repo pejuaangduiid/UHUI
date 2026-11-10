@@ -83,7 +83,7 @@ func main() {
 }
 
 func setupDevServices(app *fiber.App, pool *pgxpool.Pool, cfg *config.Config) (storage.StorageProvider, llm.LLMClient) {
-	localFS, _ := storage.NewLocalFS("./tmp/storage", []byte("uhui-dev-storage-secret-key-1234"), "http://localhost:8080/api/v1/storage/dev")
+	localFS, _ := storage.NewLocalFS(cfg.StorageLocalDir, []byte("uhui-dev-storage-secret-key-1234"), cfg.StoragePublicBaseURL)
 	storage.RegisterDevStorageHandler(app, localFS)
 
 	var llmClient llm.LLMClient
