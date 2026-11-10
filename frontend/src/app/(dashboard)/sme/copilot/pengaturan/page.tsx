@@ -26,15 +26,15 @@ export default function CopilotSettingsPage() {
       <div>
         <Link
           href="/sme/copilot"
-          className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-200 transition mb-3"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200 transition mb-3 font-medium"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Kembali ke Dashboard Co-Pilot</span>
         </Link>
-        <h1 className="text-2xl font-bold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
           Pengaturan Jadwal Co-Pilot
         </h1>
-        <p className="text-sm text-zinc-400 mt-1">
+        <p className="text-sm text-slate-500 dark:text-zinc-400 mt-1">
           Konfigurasikan siklus otomatisasi analisis performa dan deteksi anomali operasional usaha.
         </p>
       </div>

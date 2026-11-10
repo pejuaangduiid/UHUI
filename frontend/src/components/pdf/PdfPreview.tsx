@@ -40,8 +40,8 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
 
   if (!qrUrl) {
     return (
-      <div className="flex items-center justify-center p-8 text-sm text-zinc-400">
-        <Loader2 className="w-4 h-4 animate-spin mr-2" /> Menyiapkan dokumen PDF...
+      <div className="flex items-center justify-center p-8 text-sm text-[#516072] dark:text-slate-400">
+        <Loader2 className="w-4 h-4 animate-spin mr-2 text-[#1D5FAE]" /> Menyiapkan dokumen PDF...
       </div>
     );
   }
@@ -59,16 +59,16 @@ export const PdfPreview: React.FC<PdfPreviewProps> = ({
   const fileName = `${docType}_${businessName.replace(/\s+/g, "_")}_${sha256.slice(0, 8)}.pdf`;
 
   return (
-    <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-lg flex flex-col items-center gap-3">
-      <div className="text-sm font-medium text-zinc-200">Dokumen PDF Siap Diunduh</div>
+    <div className="p-5 bg-[#1D5FAE] border border-[#184e91] rounded-2xl flex flex-col items-center gap-3 text-white shadow-xs">
+      <div className="text-sm font-bold text-white">Dokumen PDF Siap Diunduh</div>
       <PDFDownloadLink
         document={documentElement}
         fileName={fileName}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-[#1D5FAE] hover:bg-[#184e91] text-white text-sm font-medium rounded-md transition"
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-[#DFE9F1] text-[#1D5FAE] text-sm font-bold rounded-xl transition shadow-xs"
       >
         {({ loading }) => (
           <>
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+            {loading ? <Loader2 className="w-4 h-4 animate-spin text-[#1D5FAE]" /> : <Download className="w-4 h-4 text-[#1D5FAE]" />}
             {loading ? "Merender PDF..." : "Unduh PDF Resmi"}
           </>
         )}

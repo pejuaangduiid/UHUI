@@ -6,7 +6,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { ProfileDropdown } from "./ProfileDropdown";
-import { SimulationBadge } from "../domain/bursa/SimulationBadge";
 import { useSession } from "@/hooks/use-session";
 import { Menu, X, ArrowRight, LayoutDashboard, LogOut, Store } from "lucide-react";
 
@@ -38,7 +37,6 @@ export function PublicHeader() {
                 className="h-10 w-auto object-contain rounded-lg bg-white px-1.5 py-0.5 shadow-xs"
                 priority
               />
-              <SimulationBadge className="hidden sm:inline-flex" />
             </Link>
 
             <nav className="hidden md:flex items-center gap-2 text-sm font-medium">

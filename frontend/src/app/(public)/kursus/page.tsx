@@ -1,13 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { useCourses, useWebinars, useRegisterWebinar } from "@/hooks/use-lms";
+import { useSession } from "@/hooks/use-session";
 import { EnrolledCoursesSection } from "@/components/domain/lms/EnrolledCoursesSection";
 import { CourseCatalogSection } from "@/components/domain/lms/CourseCatalogSection";
 import { WebinarListSection } from "@/components/domain/lms/WebinarListSection";
 import { GraduationCap, Video, BookOpen } from "lucide-react";
 
 export default function KursusCatalogPage() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { user, isAuthenticated } = useSession();
   const { data: courses, isLoading: loadingCourses } = useCourses();
   const { data: webinars, isLoading: loadingWebinars } = useWebinars();
   const registerWebinar = useRegisterWebinar();
@@ -16,6 +21,10 @@ export default function KursusCatalogPage() {
   const hasEnrolled = (courses ?? []).some((c) => c.is_enrolled);
 
   const handleRegisterWebinar = (id: string) => {
+    if (!isAuthenticated || !user) {
+      router.push(`/login?next=${encodeURIComponent(pathname)}`);
+      return;
+    }
     registerWebinar.mutate(id, {
       onSuccess: () => setRegisteredMap((prev) => ({ ...prev, [id]: true })),
     });

@@ -4,10 +4,10 @@ import { OjkScfSection } from "@/components/home/OjkScfSection";
 
 export default function Home() {
   const cards = [
-    { title: "Pembukuan & Kasir POS", desc1: "Pencatatan kas standar SAK EMKM.", desc2: "Cetak struk & pantau omzet real-time.", tag: "Modul Kas", icon: Receipt },
-    { title: "Bursa & Trading Chart", desc1: "Valuasi mikro-ekuitas transparan.", desc2: "Bursa edukasi saham riil bisnis lokal.", tag: "Pasar Saham", icon: CandlestickChart },
-    { title: "Komunitas & Boardroom", desc1: "Ruang rapat investor terverifikasi.", desc2: "Diskusi tata kelola & rantai pasok.", tag: "Boardroom", icon: Users2 },
-    { title: "LMS Kursus & Webinar", desc1: "Kurikulum praktis tata kelola UMKM.", desc2: "Webinar berkala bersama praktisi.", tag: "Akademi", icon: GraduationCap },
+    { title: "Pembukuan & Kasir POS", desc1: "Pencatatan kas standar SAK EMKM.", desc2: "Cetak struk & pantau omzet real-time.", tag: "Modul Kas", href: "/sme/kasir", icon: Receipt },
+    { title: "Bursa & Trading Chart", desc1: "Valuasi mikro-ekuitas transparan.", desc2: "Bursa edukasi saham riil bisnis lokal.", tag: "Pasar Saham", href: "/bursa", icon: CandlestickChart },
+    { title: "Komunitas & Boardroom", desc1: "Ruang rapat investor terverifikasi.", desc2: "Diskusi tata kelola & rantai pasok.", tag: "Boardroom", href: "/komunitas", icon: Users2 },
+    { title: "LMS Kursus & Webinar", desc1: "Kurikulum praktis tata kelola UMKM.", desc2: "Webinar berkala bersama praktisi.", tag: "Akademi", href: "/kursus", icon: GraduationCap },
   ];
 
   return (
@@ -37,12 +37,18 @@ export default function Home() {
               {cards.map((c) => {
                 const Icon = c.icon;
                 return (
-                  <article key={c.title} className="stitch-card p-5 flex flex-col justify-between group">
+                  <Link
+                    key={c.title}
+                    href={c.href}
+                    className="stitch-card p-5 flex flex-col justify-between group cursor-pointer transition hover:border-[#1D5FAE]/50 hover:shadow-md block"
+                  >
                     <div>
                       <div className="w-10 h-10 rounded-[10px] bg-[#DFE9F1] dark:bg-blue-950/60 flex items-center justify-center text-[#1D5FAE] dark:text-blue-300">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <h2 className="text-[14px] font-semibold text-[#0F1E2E] dark:text-white mt-4 mb-2">{c.title}</h2>
+                      <h2 className="text-[14px] font-semibold text-[#0F1E2E] dark:text-white mt-4 mb-2 group-hover:text-[#1D5FAE] dark:group-hover:text-blue-400 transition-colors">
+                        {c.title}
+                      </h2>
                       <div className="text-xs text-[#516072] dark:text-slate-400 space-y-1 leading-relaxed">
                         <p>{c.desc1}</p>
                         <p>{c.desc2}</p>
@@ -52,7 +58,7 @@ export default function Home() {
                       <span>{c.tag}</span>
                       <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                     </div>
-                  </article>
+                  </Link>
                 );
               })}
             </div>
@@ -80,8 +86,8 @@ export default function Home() {
               </div>
             </div>
           </section>
-      </div>
-      <OjkScfSection />
-    </div>
+      </div >
+    <OjkScfSection />
+    </div >
   );
 }

@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { useCourse, useEnrollCourse } from "@/hooks/use-lms";
+import { useSession } from "@/hooks/use-session";
 import { formatIDR } from "@/lib/money";
 import { LessonViewer } from "@/components/domain/lms/LessonViewer";
 import { GraduationCap, CheckCircle2, ShieldCheck } from "lucide-react";
 
 export default function CourseDetailPage() {
   const params = useParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { user, isAuthenticated } = useSession();
   const slug = typeof params?.slug === "string" ? params.slug : "";
   const { data: course, isLoading } = useCourse(slug);
   const enrollMutation = useEnrollCourse();
@@ -32,6 +36,10 @@ export default function CourseDetailPage() {
   }
 
   const handleEnroll = () => {
+    if (!isAuthenticated || !user) {
+      router.push(`/login?next=${encodeURIComponent(pathname)}`);
+      return;
+    }
     enrollMutation.mutate(course.id, {
       onSuccess: () => setEnrolledSuccess(true),
     });
@@ -43,11 +51,11 @@ export default function CourseDetailPage() {
     <div className="container mx-auto px-4 py-8 max-w-4xl space-y-8">
       <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-white/[0.08]">
         <div className="flex items-center gap-2 text-xs">
-            <span className="font-bold uppercase text-[#1D5FAE] dark:text-blue-300 px-2.5 py-0.5 bg-[#DFE9F1] dark:bg-blue-950/60 rounded-full border border-[#B9C8DD] dark:border-blue-900/40">
-              Tingkat {course.level}
-            </span>
-            <span className="text-slate-400">&bull;</span>
-            <span className="text-slate-400 font-medium">Instruktur: {course.instructor_name}</span>
+          <span className="font-bold uppercase text-[#1D5FAE] dark:text-blue-300 px-2.5 py-0.5 bg-[#DFE9F1] dark:bg-blue-950/60 rounded-full border border-[#B9C8DD] dark:border-blue-900/40">
+            Tingkat {course.level}
+          </span>
+          <span className="text-slate-400">&bull;</span>
+          <span className="text-slate-400 font-medium">Instruktur: {course.instructor_name}</span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{course.title}</h1>
         <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">{course.description}</p>

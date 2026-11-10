@@ -34,46 +34,46 @@ export const ReportMeta: React.FC<ReportMetaProps> = ({
   };
 
   return (
-    <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-xl space-y-4">
+    <div className="p-5 bg-[#1D5FAE] border border-[#184e91] rounded-2xl space-y-4 text-white shadow-xs">
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-2 text-sm font-medium text-zinc-200">
-          <ShieldCheck className="w-4 h-4 text-[#1D5FAE]" />
+        <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <ShieldCheck className="w-4 h-4 text-[#DFE9F1]" />
           <span>Kriptografis SHA-256 Snapshot</span>
         </div>
         <Link
           href={`/verify/${sha256}`}
           target="_blank"
-          className="text-xs text-[#1D5FAE] hover:underline inline-flex items-center gap-1"
+          className="text-xs text-[#DFE9F1] hover:underline inline-flex items-center gap-1 font-medium"
         >
           <span>Halaman Verifikasi Publik</span>
           <ExternalLink className="w-3 h-3" />
         </Link>
       </div>
 
-      <div className="flex items-center gap-2 p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg">
-        <code className="text-xs text-zinc-400 font-mono flex-1 break-all select-all">
+      <div className="flex items-center gap-2 p-2.5 bg-[#184e91] border border-white/20 rounded-xl">
+        <code className="text-xs text-white/95 font-mono flex-1 break-all select-all">
           {sha256}
         </code>
         <button
           type="button"
           onClick={copyHash}
-          className="p-1.5 hover:bg-zinc-800 text-zinc-400 rounded transition shrink-0"
+          className="p-1.5 hover:bg-white/10 text-white rounded-lg transition shrink-0"
           title="Salin Hash"
         >
-          {copied ? <Check className="w-4 h-4 text-[#1D5FAE]" /> : <Copy className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-green-300" /> : <Copy className="w-4 h-4" />}
         </button>
       </div>
 
-      <label className="flex items-start gap-3 cursor-pointer pt-2 border-t border-zinc-800/80">
+      <label className="flex items-start gap-3 cursor-pointer pt-2 border-t border-white/20">
         <input
           type="checkbox"
           checked={showFigures}
           disabled={updating}
           onChange={handleToggle}
-          className="mt-0.5 rounded text-[#1D5FAE] focus:ring-[#1D5FAE]"
+          className="mt-0.5 rounded text-[#1D5FAE] bg-white border-white/30 focus:ring-white"
         />
-        <div className="text-xs text-zinc-400">
-          <strong className="text-zinc-200 block">Tampilkan Angka Kunci di Halaman Verifikasi Publik</strong>
+        <div className="text-xs text-white/90">
+          <strong className="text-white block font-semibold">Tampilkan Angka Kunci di Halaman Verifikasi Publik</strong>
           Jika diaktifkan, pihak luar yang memindai QR code dapat memverifikasi total penjualan dan laba di layar peramban.
         </div>
       </label>
