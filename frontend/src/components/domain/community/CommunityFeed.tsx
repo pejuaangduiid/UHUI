@@ -94,7 +94,7 @@ export function CommunityFeed({
           <button
             type="button"
             onClick={onToggleCreate}
-            className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 transition"
+            className="inline-flex items-center gap-2 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] px-4 py-2 text-xs font-semibold text-white shadow-sm transition"
           >
             <span>+ Buat Postingan Sekarang</span>
           </button>

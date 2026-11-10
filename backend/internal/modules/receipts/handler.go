@@ -33,7 +33,7 @@ func registerScan(api huma.API, svc *Service, pool *pgxpool.Pool) {
 		SMEID string `path:"sme_id"`
 		Body  ScanInputBody
 	}) (*struct{ Body ScanResult }, error) {
-		p, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID)
+		p, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID)
 		if err != nil {
 			return nil, mapAppError(err)
 		}
@@ -69,7 +69,7 @@ func registerConfirm(api huma.API, svc *Service, pool *pgxpool.Pool) {
 			Status string `json:"status"`
 		}
 	}, error) {
-		p, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID)
+		p, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID)
 		if err != nil {
 			return nil, mapAppError(err)
 		}

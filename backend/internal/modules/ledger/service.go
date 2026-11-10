@@ -47,6 +47,11 @@ func (s *Service) CreateTransaction(ctx context.Context, smeID, createdBy pgtype
 		return nil, err
 	}
 
+	queries := gen.New(s.pool)
+	if sme, smeErr := queries.GetSMEByID(ctx, smeID); smeErr == nil && sme.IsSuspended {
+		return nil, apperr.Forbidden("SME_SUSPENDED", "Operasional UMKM ini sedang ditangguhkan oleh Admin", "Tidak dapat mencatat transaksi saat status bisnis ditangguhkan")
+	}
+
 	txDate := time.Now()
 	if in.TxDate != nil {
 		txDate = *in.TxDate

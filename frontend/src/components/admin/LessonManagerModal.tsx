@@ -61,7 +61,7 @@ export function LessonManagerModal({ course, isOpen, onClose }: LessonManagerMod
       <div className="w-full max-w-2xl rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-[#121827] space-y-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500"><BookOpen className="h-4 w-4" /></div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300"><BookOpen className="h-4 w-4" /></div>
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-white">Kelola Modul: {course.title}</h3>
               <p className="text-[11px] text-slate-400">Total {lessons.length} modul bacaan terdaftar</p>
@@ -72,22 +72,22 @@ export function LessonManagerModal({ course, isOpen, onClose }: LessonManagerMod
 
         <form onSubmit={handleSubmit} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-white/[0.05] space-y-3 text-xs">
           <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-            <Plus className="h-3.5 w-3.5 text-blue-500" />
+            <Plus className="h-3.5 w-3.5 text-[#1D5FAE]" />
             <span>{editingLesson ? "Edit Modul Bacaan" : "Tambah Modul Bacaan Baru"}</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Judul Modul..." required className="sm:col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-1.5 outline-none focus:border-blue-500 dark:border-white/10 dark:bg-[#101624] dark:text-white" />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Judul Modul..." required className="sm:col-span-2 rounded-xl border border-slate-200 bg-white px-3 py-1.5 outline-none focus:border-[#1D5FAE] dark:border-white/10 dark:bg-[#101624] dark:text-white" />
             <div className="flex items-center gap-1.5">
-              <input type="number" min={1} value={duration} onChange={(e) => setDuration(Number(e.target.value))} placeholder="Menit" required className="w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 outline-none focus:border-blue-500 dark:border-white/10 dark:bg-[#101624] dark:text-white" />
+              <input type="number" min={1} value={duration} onChange={(e) => setDuration(Number(e.target.value))} placeholder="Menit" required className="w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 outline-none focus:border-[#1D5FAE] dark:border-white/10 dark:bg-[#101624] dark:text-white" />
               <span className="text-[11px] text-slate-400">m</span>
             </div>
           </div>
-          <textarea rows={2} value={content} onChange={(e) => setContent(e.target.value)} placeholder="Isi materi bacaan teks terstandar..." required className="w-full rounded-xl border border-slate-200 bg-white p-2.5 outline-none focus:border-blue-500 dark:border-white/10 dark:bg-[#101624] dark:text-white" />
+          <textarea rows={2} value={content} onChange={(e) => setContent(e.target.value)} placeholder="Isi materi bacaan teks terstandar..." required className="w-full rounded-xl border border-slate-200 bg-white p-2.5 outline-none focus:border-[#1D5FAE] dark:border-white/10 dark:bg-[#101624] dark:text-white" />
           <div className="flex justify-end gap-2">
             {editingLesson && <button type="button" onClick={handleResetForm} className="px-3 py-1.5 rounded-lg text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700">Batal Edit</button>}
-            <button type="submit" disabled={createLesson.isPending || updateLesson.isPending} className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 font-bold text-white shadow-sm transition disabled:opacity-50">
-              {editingLesson ? "Simpan Modul" : "+ Tambah Modul"}
-            </button>
+              <button type="submit" disabled={createLesson.isPending || updateLesson.isPending} className="px-4 py-1.5 rounded-lg bg-[#1D5FAE] hover:bg-[#184e91] font-bold text-white shadow-sm transition disabled:opacity-50">
+                {editingLesson ? "Simpan Modul" : "+ Tambah Modul"}
+              </button>
           </div>
         </form>
 
@@ -110,7 +110,7 @@ export function LessonManagerModal({ course, isOpen, onClose }: LessonManagerMod
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] text-slate-400 flex items-center gap-1"><Clock className="h-3 w-3" />{l.duration_minutes}m</span>
-                    <button type="button" onClick={() => handleStartEdit(l)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40"><Edit2 className="h-3.5 w-3.5" /></button>
+                    <button type="button" onClick={() => handleStartEdit(l)} className="p-1.5 rounded-lg text-[#1D5FAE] hover:bg-[#DFE9F1] dark:hover:bg-blue-950/40"><Edit2 className="h-3.5 w-3.5" /></button>
                     <button type="button" onClick={() => deleteLesson.mutate(l.id)} className="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40"><Trash2 className="h-3.5 w-3.5" /></button>
                   </div>
                 </div>

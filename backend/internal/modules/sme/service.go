@@ -37,12 +37,18 @@ type SmeDTO struct {
 	IsIncorporatedPt      bool   `json:"is_incorporated_pt"`
 	IsListedOnBursa       bool   `json:"is_listed_on_bursa"`
 	VerifyShowFigures     bool   `json:"verify_show_figures"`
+	IsSuspended           bool   `json:"is_suspended"`
+	SuspensionReason      string `json:"suspension_reason,omitempty"`
 }
 
 func ToSmeDTO(s gen.Sme) SmeDTO {
 	var score int16
 	if s.DigitalReadinessScore.Valid {
 		score = s.DigitalReadinessScore.Int16
+	}
+	var reason string
+	if s.SuspensionReason.Valid {
+		reason = s.SuspensionReason.String
 	}
 	return SmeDTO{
 		ID:                    uuidToString(s.ID),
@@ -56,6 +62,8 @@ func ToSmeDTO(s gen.Sme) SmeDTO {
 		IsListedOnBursa:       s.IsListedOnBursa,
 		VerifyShowFigures:     s.VerifyShowFigures,
 		AiInterval:            string(s.AiInterval),
+		IsSuspended:           s.IsSuspended,
+		SuspensionReason:      reason,
 	}
 }
 

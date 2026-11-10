@@ -111,7 +111,7 @@ func registerUpdateProfile(api huma.API, svc *Service, pool *pgxpool.Pool) {
 		SMEID string `path:"sme_id"`
 		Body  UpdateProfileInput
 	}) (*struct{ Body gen.Sme }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid pgtype.UUID
@@ -134,7 +134,7 @@ func registerListDocuments(api huma.API, svc *Service, pool *pgxpool.Pool) {
 	}, func(ctx context.Context, in *struct {
 		SMEID string `path:"sme_id"`
 	}) (*struct{ Body []DocumentItem }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid pgtype.UUID
@@ -159,7 +159,7 @@ func registerUploadDocument(api huma.API, svc *Service, pool *pgxpool.Pool) {
 		DocType string `path:"doc_type"`
 		Body    UploadDocInputBody
 	}) (*struct{ Body DocumentItem }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid pgtype.UUID

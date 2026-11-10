@@ -85,29 +85,39 @@ export function UserPortfolioSection({ onExplore }: UserPortfolioSectionProps) {
                       {formatIDR(item.amount_idr)}
                     </td>
                     <td className="p-4">
-                      <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${item.status === "confirmed"
-                          ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
-                          : "bg-slate-100 dark:bg-slate-800 text-slate-400 border-transparent"
-                        }`}>
-                        {item.status}
-                      </span>
+                      {item.status === "refunded" ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-950/80 dark:text-rose-300 border border-rose-300 dark:border-rose-800">
+                          Saham Dijual (Refunded)
+                        </span>
+                      ) : item.status === "confirmed" ? (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300 border border-[#B9C8DD] dark:border-blue-900/40">
+                          Saham Aktif
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+                          {item.status}
+                        </span>
+                      )}
                     </td>
                     <td className="p-4 text-slate-400">{formatDate(item.created_at)}</td>
                     <td className="p-4 text-right space-x-2">
                       <Link
                         href={`/bursa/${item.campaign_slug}`}
-                        className="inline-flex items-center gap-1 text-blue-500 hover:text-blue-400 font-semibold"
-                        title="Lihat Prospektus Usaha"
+                        className="inline-flex items-center gap-1 text-[#1D5FAE] hover:underline font-semibold"
+                        title="Lihat Saham / Kampanye Usaha"
                       >
-                        Prospektus <ArrowUpRight className="h-3 w-3" />
+                        <span>Lihat Saham</span>
+                        <ArrowUpRight className="h-3 w-3" />
                       </Link>
-                      <Link
-                        href="/sme/ruang-rapat"
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 font-semibold text-[11px]"
-                        title="Buka Ruang Diskusi Pemegang Saham"
-                      >
-                        <MessageSquare className="h-3 w-3" /> Diskusi
-                      </Link>
+                      {item.status !== "refunded" && (
+                        <Link
+                          href="/sme/ruang-rapat"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 font-semibold text-[11px]"
+                          title="Buka Ruang Diskusi Pemegang Saham"
+                        >
+                          <MessageSquare className="h-3 w-3" /> Diskusi
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))}

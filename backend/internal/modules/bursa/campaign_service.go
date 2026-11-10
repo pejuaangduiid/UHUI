@@ -60,6 +60,9 @@ func (s *CampaignService) checkSmeEligibility(ctx context.Context, smeID uuid.UU
 	if err != nil {
 		return apperr.NotFound("SME_NOT_FOUND", "Data UMKM tidak ditemukan", "")
 	}
+	if sme.IsSuspended {
+		return apperr.Forbidden("SME_SUSPENDED", "UMKM sedang ditangguhkan oleh Admin", "Tidak dapat membuat kampanye bursa saat status bisnis ditangguhkan")
+	}
 	if scheme == string(gen.FundingSchemeMicroEquity) && !sme.IsIncorporatedPt {
 		return apperr.BadRequest("PT_REQUIRED", "Skema micro_equity hanya diperbolehkan untuk UMKM berbentuk PT", "Gunakan skema revenue_sharing atau ubah status PT")
 	}

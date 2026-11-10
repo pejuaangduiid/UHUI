@@ -2746,6 +2746,8 @@ export interface components {
             /** @example kopi-makmur-1234 */
             slug: string;
             verify_show_figures: boolean;
+            is_suspended?: boolean;
+            suspension_reason?: string;
         };
         SnapshotDTO: {
             /**

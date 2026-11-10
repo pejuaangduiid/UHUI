@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { usePublicCampaigns } from "@/hooks/use-campaigns";
 import { CampaignCard } from "@/components/domain/bursa/CampaignCard";
-import { Search, TrendingUp, ArrowRight, ShieldCheck } from "lucide-react";
+import { Search, TrendingUp } from "lucide-react";
 
 export default function BursaCatalogPage() {
   const [scheme, setScheme] = useState("");
@@ -28,31 +27,6 @@ export default function BursaCatalogPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
-      {/* Top Banner (Screen 02 Stitch Header) */}
-      <div className="stitch-card p-6 bg-gradient-to-r from-[#0D1C2C] to-[#132235] text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-blue-300 bg-white/10 px-2.5 py-1 rounded-full">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            <span>Pasar Saham &amp; Penawaran Ekuitas UMKM Terverifikasi</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            Bisnis Terdaftar di UHUI yang Menjual Saham
-          </h2>
-          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
-            Semua usaha di bawah ini adalah bisnis aktif yang menggunakan ekosistem kasir digital UHUI, terverifikasi standar pembukuan SAK EMKM, dan sedang membuka porsi mikro-ekuitas untuk ekspansi usaha.
-          </p>
-        </div>
-
-        <Link
-          href="/sme/kampanye"
-          className="shrink-0 text-xs font-semibold bg-[#1D5FAE] hover:bg-[#184e91] text-white px-5 py-3 rounded-[11px] transition shadow-xs inline-flex items-center gap-2 active:scale-[0.985]"
-        >
-          <TrendingUp className="h-4 w-4" />
-          <span>Jual Saham Usaha Anda</span>
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-
       {/* Title & Filters */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 border-b border-[#E2E7EB] dark:border-white/[0.08] pb-6">
         <div>

@@ -70,7 +70,7 @@ func registerCreate(api huma.API, svc *Service, pool *pgxpool.Pool) {
 		SMEID string `path:"sme_id"`
 		Body  CreateItemInput
 	}) (*struct{ Body ItemDTO }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid pgtype.UUID
@@ -95,7 +95,7 @@ func registerUpdate(api huma.API, svc *Service, pool *pgxpool.Pool) {
 		ID    string `path:"id"`
 		Body  UpdateItemInput
 	}) (*struct{ Body ItemDTO }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid, iid pgtype.UUID
@@ -124,7 +124,7 @@ func registerAdjust(api huma.API, svc *Service, pool *pgxpool.Pool) {
 			DeltaQty int32  `json:"delta_qty"`
 		}
 	}) (*struct{ Body ItemDTO }, error) {
-		if _, err := middleware.CheckSMEOwner(ctx, pool, in.SMEID); err != nil {
+		if _, err := middleware.CheckSMEOwnerActive(ctx, pool, in.SMEID); err != nil {
 			return nil, mapAppError(err)
 		}
 		var sid, iid pgtype.UUID

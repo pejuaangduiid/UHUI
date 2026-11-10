@@ -1,17 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Building2, FileCheck2, Package, Receipt, ShoppingCart, Sparkles, Zap, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Building2, FileCheck2, Package, Receipt, ShoppingCart, Sparkles, Zap, ArrowRight, AlertTriangle } from "lucide-react";
 import { useSession } from "@/hooks/use-session";
 import { useTransactions } from "@/hooks/use-transactions";
 import { useReadiness } from "@/hooks/use-readiness";
+import { useMySMEs } from "@/hooks/use-sme-list";
 import { ScoreRing } from "@/components/charts/ScoreRing";
 import { formatIDR } from "@/lib/money";
 
 export default function SmeDashboardPage() {
   const { user, smeId } = useSession();
+  const { data: businesses } = useMySMEs();
   const { aggregates } = useTransactions(smeId);
   const { score } = useReadiness(smeId);
+
+  const currentBiz = businesses?.find((b) => b.id === smeId);
+  const isSuspended = Boolean(currentBiz?.is_suspended);
 
   const revenue = aggregates?.revenue_idr ?? 0;
   const expense = aggregates?.expense_idr ?? 0;
@@ -48,6 +53,19 @@ export default function SmeDashboardPage() {
           </Link>
         </div>
       </div>
+
+      {isSuspended && (
+        <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 space-y-1 shadow-xs">
+          <div className="flex items-center gap-2 font-bold text-sm text-rose-700 dark:text-rose-200">
+            <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
+            <span>Pemberitahuan: Usaha Ini Sedang Ditangguhkan oleh Admin ({currentBiz?.business_name})</span>
+          </div>
+          <p className="text-xs text-rose-600 dark:text-rose-300 leading-relaxed pl-6">
+            {currentBiz?.suspension_reason ? `Alasan: "${currentBiz.suspension_reason}". ` : "Operasional kasir POS dan bursa saham dinonaktifkan sementara karena sanksi. "}
+            Silakan hubungi superadmin untuk informasi aktivasi kembali.
+          </p>
+        </div>
+      )}
 
       {!smeId && (
         <div className="stitch-card p-5 bg-[#FEF7EC] dark:bg-amber-950/20 border-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

@@ -100,7 +100,7 @@ export function CommentList({
         <button
           type="submit"
           disabled={isLoading || !content.trim()}
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-sm hover:from-blue-500 hover:to-indigo-500 transition disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] text-xs font-semibold text-white shadow-sm transition disabled:opacity-50"
         >
           {isLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
           <span>{isLoading ? "Mengirim..." : "Kirim"}</span>

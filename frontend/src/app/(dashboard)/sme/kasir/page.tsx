@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ShoppingCart, Printer } from "lucide-react";
+import { ShoppingCart, Printer, AlertTriangle } from "lucide-react";
 import { useSession } from "@/hooks/use-session";
 import { useMySMEs } from "@/hooks/use-sme-list";
 import { useInventory } from "@/hooks/use-inventory";
@@ -20,12 +20,17 @@ export default function CashierPage() {
   const [receiptOpen, setReceiptOpen] = useState(false);
 
   const activeBiz = businesses?.find((b) => b.id === smeId) ?? businesses?.[0];
+  const isSuspended = Boolean(activeBiz?.is_suspended);
 
   const handleCheckout = async (
     cartItems: { inventory_item_id: string; qty: number; unit_price_idr: number }[],
     totalAmountIDR: number,
     receiptItems: CompletedReceiptItem[]
   ) => {
+    if (isSuspended) {
+      alert("Bisnis ini sedang ditangguhkan oleh admin. Transaksi tidak dapat diproses.");
+      return;
+    }
     await createTx.mutateAsync({
       tx_type: "sale",
       total_amount_idr: totalAmountIDR,
@@ -74,6 +79,15 @@ export default function CashierPage() {
           </button>
         )}
       </div>
+
+      {isSuspended && (
+        <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2.5 shadow-xs">
+          <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
+          <span>
+            <strong>Bisnis Ditangguhkan:</strong> Transaksi kasir untuk usaha ini dinonaktifkan sementara oleh admin{activeBiz?.suspension_reason ? ` (Alasan: "${activeBiz.suspension_reason}")` : ""}.
+          </span>
+        </div>
+      )}
 
       {/* Main POS Split Layout (60% Catalog / 40% Cart Ticket) */}
       <div className="grid flex-1 grid-cols-1 gap-5 overflow-hidden lg:grid-cols-12">

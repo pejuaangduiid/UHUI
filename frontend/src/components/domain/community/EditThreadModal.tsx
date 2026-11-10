@@ -71,7 +71,7 @@ export function EditThreadModal({
             <button
               type="submit"
               disabled={isLoading || !title.trim() || !content.trim()}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 text-white font-bold shadow-md shadow-blue-500/25 hover:bg-blue-500 transition disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] text-white font-semibold shadow-sm transition disabled:opacity-50"
             >
               {isLoading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
               <span>{isLoading ? "Menyimpan..." : "Simpan Perubahan"}</span>

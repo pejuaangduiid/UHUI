@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ProgressBar } from "./ProgressBar";
 import { formatIDR } from "@/lib/money";
-import { CheckCircle2, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import type { components } from "@/types/api";
 
 type Campaign = components["schemas"]["PublicCampaignDTO"];
@@ -20,15 +20,9 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
     <div className="stitch-card p-5 transition-all duration-200 flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1D5FAE] bg-[#DFE9F1] dark:bg-blue-950/60 dark:text-blue-300 px-2.5 py-0.5 rounded-full">
-              {campaign.sector || "UMKM"}
-            </span>
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#1D5FAE] bg-[#DFE9F1] dark:bg-blue-950/50 dark:text-blue-300 px-2 py-0.5 rounded-full">
-              <CheckCircle2 className="h-3 w-3" />
-              <span>Terdaftar di UHUI</span>
-            </span>
-          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1D5FAE] bg-[#DFE9F1] dark:bg-blue-950/60 dark:text-blue-300 px-2.5 py-0.5 rounded-full">
+            {campaign.sector || "UMKM"}
+          </span>
           <span className="text-[11px] px-2.5 py-0.5 rounded-full font-medium bg-[#F4F3F1] text-[#516072] dark:bg-white/10 dark:text-slate-300">
             {schemeLabel}
           </span>

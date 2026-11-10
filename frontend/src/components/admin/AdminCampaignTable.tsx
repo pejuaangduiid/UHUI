@@ -32,7 +32,7 @@ export function AdminCampaignTable({ items, onToggleSuspend, isLoading }: AdminC
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari judul kampanye, bisnis, atau pemilik..."
-          className="w-full max-w-sm rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-blue-500 dark:border-white/10 dark:bg-[#121827] dark:text-white"
+          className="w-full max-w-sm rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs outline-none focus:border-[#1D5FAE] dark:border-white/10 dark:bg-[#121827] dark:text-white"
         />
         <span className="text-xs text-slate-500 dark:text-slate-400">Total: {filtered.length} Kampanye</span>
       </div>
@@ -60,7 +60,7 @@ export function AdminCampaignTable({ items, onToggleSuspend, isLoading }: AdminC
                   <div className="text-[11px] text-slate-400 capitalize">{c.scheme.replace("_", " ")}</div>
                 </td>
                 <td className="py-3.5 px-4">
-                  <div className="font-semibold text-blue-600 dark:text-blue-400">{formatIDR(c.raised_amount_idr)}</div>
+                  <div className="font-semibold text-[#1D5FAE] dark:text-blue-400">{formatIDR(c.raised_amount_idr)}</div>
                   <div className="text-[10px] text-slate-400">
                     {c.target_amount_idr > 0 ? Math.round((c.raised_amount_idr / c.target_amount_idr) * 100) : 0}% Terpenuhi
                   </div>
@@ -76,7 +76,7 @@ export function AdminCampaignTable({ items, onToggleSuspend, isLoading }: AdminC
                       )}
                     </div>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-500 uppercase">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300 uppercase">
                       <CheckCircle className="h-3 w-3" /> {c.status}
                     </span>
                   )}
@@ -86,7 +86,7 @@ export function AdminCampaignTable({ items, onToggleSuspend, isLoading }: AdminC
                     type="button"
                     onClick={() => setSelectedCampaign(c)}
                     className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${c.is_suspended
-                        ? "bg-blue-500/10 text-blue-600 hover:bg-blue-500/20"
+                        ? "bg-[#DFE9F1] text-[#1D5FAE] hover:bg-[#c9dbe9] dark:bg-blue-950/60 dark:text-blue-300"
                         : "bg-rose-500/10 text-rose-600 hover:bg-rose-500/20"
                       }`}
                   >

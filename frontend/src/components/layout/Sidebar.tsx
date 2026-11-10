@@ -4,17 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
-  Building2,
-  ChevronLeft,
-  ChevronRight,
-  GraduationCap,
-  LayoutDashboard,
-  ShoppingCart,
-  TrendingUp,
-  MessageSquare,
-  ShieldCheck,
-  LogOut,
-  SlidersHorizontal,
+  Building2, ChevronLeft, ChevronRight, GraduationCap, LayoutDashboard,
+  ShoppingCart, TrendingUp, MessageSquare, ShieldCheck, LogOut, SlidersHorizontal, Home,
 } from "lucide-react";
 import { useUiStore } from "@/stores/ui-store";
 
@@ -59,25 +50,27 @@ export function Sidebar({ onLogout, userRole }: SidebarProps) {
         }`}
     >
       <div className="flex h-16 items-center justify-between border-b border-[#E2E7EB] px-4 dark:border-white/[0.08]">
-        {!isSidebarCollapsed ? (
-          <div className="flex items-center gap-2">
-            <Image
-              src="/Logo.jpeg"
-              alt="UHUI Logo"
-              width={130}
-              height={45}
-              className="h-9 w-auto object-contain rounded-lg bg-white px-1.5 py-0.5 shadow-xs"
-              priority
-            />
-            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#DFE9F1] dark:bg-white/10 text-[#00478C] dark:text-blue-300">
-              {isInAdminMode ? "Admin" : "UMKM"}
-            </span>
-          </div>
-        ) : (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white shadow-xs p-0.5">
-            <Image src="/Logo.jpeg" alt="UHUI" width={32} height={32} className="h-full w-full object-contain" />
-          </div>
-        )}
+        <Link href="/" className="flex items-center gap-2" title="Kembali ke Beranda">
+          {!isSidebarCollapsed ? (
+            <>
+              <Image
+                src="/Logo.jpeg"
+                alt="UHUI Logo"
+                width={130}
+                height={45}
+                className="h-9 w-auto object-contain rounded-lg bg-white px-1.5 py-0.5 shadow-xs"
+                priority
+              />
+              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#DFE9F1] dark:bg-white/10 text-[#1D5FAE] dark:text-blue-300">
+                {isInAdminMode ? "Admin" : "UMKM"}
+              </span>
+            </>
+          ) : (
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white shadow-xs p-0.5">
+              <Image src="/Logo.jpeg" alt="UHUI" width={32} height={32} className="h-full w-full object-contain" />
+            </div>
+          )}
+        </Link>
         <button
           type="button"
           onClick={toggleSidebar}
@@ -111,27 +104,36 @@ export function Sidebar({ onLogout, userRole }: SidebarProps) {
         })}
       </nav>
 
-      {!isSidebarCollapsed && (
-          <div className="p-3 border-t border-[#E2E7EB] dark:border-white/[0.08] space-y-2">
-            {isAdminRole && (
+      <div className="p-3 border-t border-[#E2E7EB] dark:border-white/[0.08] space-y-1.5">
+            <Link
+              href="/"
+              title={isSidebarCollapsed ? "Kembali ke Beranda" : undefined}
+              className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-[#516072] hover:bg-[#E9E8E5] hover:text-[#0F1E2E] dark:text-slate-300 dark:hover:bg-white/[0.06] dark:hover:text-white transition ${isSidebarCollapsed ? "justify-center" : ""
+                }`}
+            >
+              <Home className="h-4 w-4 text-[#1D5FAE] shrink-0" />
+              {!isSidebarCollapsed && <span>Kembali ke Beranda</span>}
+            </Link>
+            {!isSidebarCollapsed && isAdminRole && (
               <Link
                 href={isInAdminMode ? "/sme" : "/admin"}
                 className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-xl border border-[#E2E7EB] dark:border-white/10 bg-white dark:bg-[#132235] text-xs font-semibold text-[#0F1E2E] dark:text-white hover:bg-[#F4F3F1] dark:hover:bg-white/5 transition"
               >
-                <SlidersHorizontal className="h-3.5 w-3.5 text-[#1D5FAE]" />
-                <span>{isInAdminMode ? "Ke Workspace UMKM" : "Ke Panel Admin"}</span>
-              </Link>
-            )}
-            <button
-              type="button"
-              onClick={onLogout}
-              className="flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-[#BA1A1A] hover:bg-red-50 dark:hover:bg-red-950/20 transition"
-            >
-              <LogOut className="h-4 w-4" />
-              <span>Keluar Akun</span>
-            </button>
-          </div>
-        )}
-    </aside>
+          <SlidersHorizontal className="h-3.5 w-3.5 text-[#1D5FAE]" />
+          <span>{isInAdminMode ? "Ke Workspace UMKM" : "Ke Panel Admin"}</span>
+        </Link>
+      )}
+      <button
+        type="button"
+        onClick={onLogout}
+        title={isSidebarCollapsed ? "Keluar Akun" : undefined}
+        className={`flex items-center gap-2.5 w-full px-3 py-2 rounded-xl text-xs font-semibold text-[#BA1A1A] hover:bg-red-50 dark:hover:bg-red-950/20 transition ${isSidebarCollapsed ? "justify-center" : ""
+          }`}
+      >
+        <LogOut className="h-4 w-4 shrink-0" />
+        {!isSidebarCollapsed && <span>Keluar Akun</span>}
+      </button>
+    </div>
+    </aside >
   );
 }

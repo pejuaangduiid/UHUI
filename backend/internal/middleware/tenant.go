@@ -79,3 +79,21 @@ func CheckSMEOwner(ctx context.Context, pool *pgxpool.Pool, smeIDStr string) (*P
 
 	return p, nil
 }
+
+// CheckSMEOwnerActive memvalidasi kepemilikan dan memastikan bisnis TIDAK dalam status ditangguhkan (is_suspended).
+func CheckSMEOwnerActive(ctx context.Context, pool *pgxpool.Pool, smeIDStr string) (*Principal, error) {
+	p, err := CheckSMEOwner(ctx, pool, smeIDStr)
+	if err != nil {
+		return nil, err
+	}
+
+	var smeID pgtype.UUID
+	_ = smeID.Scan(smeIDStr)
+	queries := gen.New(pool)
+	sme, err := queries.GetSMEByID(ctx, smeID)
+	if err == nil && sme.IsSuspended {
+		return nil, apperr.Forbidden("SME_SUSPENDED", "Bisnis sedang ditangguhkan oleh Superadmin", "Operasional bisnis dinonaktifkan selama masa penangguhan sanksi")
+	}
+
+	return p, nil
+}

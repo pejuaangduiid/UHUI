@@ -34,11 +34,11 @@ export function WebinarListSection({
         return (
           <div
             key={w.id}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-[#121827] flex flex-col justify-between space-y-4 hover:border-indigo-500/40 transition-all"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-[#121827] flex flex-col justify-between space-y-4 hover:border-[#1D5FAE]/40 transition-all"
           >
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-[11px] text-slate-400">
-                <Calendar className="h-3.5 w-3.5 text-indigo-500" />
+                <Calendar className="h-3.5 w-3.5 text-[#1D5FAE]" />
                 <span>{new Date(w.scheduled_at).toLocaleDateString("id-ID", { dateStyle: "long" })}</span>
               </div>
               <h3 className="font-extrabold text-sm text-slate-900 dark:text-white leading-snug">{w.title}</h3>
@@ -52,9 +52,9 @@ export function WebinarListSection({
                 type="button"
                 disabled={isDone || isPending}
                 onClick={() => onRegister(w.id)}
-                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm ${isDone
-                    ? "bg-blue-500/10 text-blue-500 border border-blue-500/20"
-                    : "bg-indigo-600 hover:bg-indigo-500 text-white"
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-[11px] text-xs font-semibold transition shadow-sm active:scale-[0.985] ${isDone
+                  ? "bg-[#DFE9F1] text-[#00478C] dark:bg-blue-950/60 dark:text-blue-300 border border-[#B9C8DD] dark:border-blue-900/40"
+                  : "bg-[#1D5FAE] hover:bg-[#184e91] text-white"
                   }`}
               >
                 {isDone ? <CheckCircle className="h-3.5 w-3.5" /> : null}

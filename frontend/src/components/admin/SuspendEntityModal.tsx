@@ -37,8 +37,8 @@ export function SuspendEntityModal({
       <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-[#121827] space-y-4">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-white/[0.06]">
           <div className="flex items-center gap-2">
-            <div className={`flex h-8 w-8 items-center justify-center rounded-xl ${isCurrentlySuspended ? "bg-blue-500/10 text-blue-500" : "bg-rose-500/10 text-rose-500"
-              }`}>
+              < div className={`flex h-8 w-8 items-center justify-center rounded-xl ${isCurrentlySuspended ? "bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300" : "bg-rose-500/10 text-rose-500"
+                }`}>
               <AlertTriangle className="h-4 w-4" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">{title}</h3>
@@ -51,7 +51,7 @@ export function SuspendEntityModal({
         <form onSubmit={handleSubmit} className="space-y-4 text-xs">
           <p className="text-slate-600 dark:text-slate-300">
             {isCurrentlySuspended ? (
-              <>Apakah Anda yakin ingin <strong className="text-blue-500">mengaktifkan kembali</strong> akses untuk <strong>{entityName}</strong>?</>
+              <>Apakah Anda yakin ingin <strong className="text-[#1D5FAE] dark:text-blue-400">mengaktifkan kembali</strong> akses untuk <strong>{entityName}</strong>?</>
             ) : (
               <>Apakah Anda yakin ingin <strong className="text-rose-500">menangguhkan (suspend)</strong> <strong>{entityName}</strong>? Tindakan ini akan menghentikan transaksi atau aktivitas investasi terkait.</>
             )}
@@ -86,7 +86,7 @@ export function SuspendEntityModal({
               type="submit"
               disabled={isLoading}
               className={`px-4 py-2 rounded-xl font-bold text-white transition ${isCurrentlySuspended
-                  ? "bg-blue-600 hover:bg-blue-500"
+                  ? "bg-[#1D5FAE] hover:bg-[#184e91]"
                   : "bg-rose-600 hover:bg-rose-500"
                 }`}
             >

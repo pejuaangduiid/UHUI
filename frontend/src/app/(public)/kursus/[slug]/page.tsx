@@ -43,11 +43,11 @@ export default function CourseDetailPage() {
     <div className="container mx-auto px-4 py-8 max-w-4xl space-y-8">
       <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-white/[0.08]">
         <div className="flex items-center gap-2 text-xs">
-          <span className="font-bold uppercase text-blue-500 px-2.5 py-0.5 bg-blue-500/10 rounded-full border border-blue-500/20">
-            Tingkat {course.level}
-          </span>
-          <span className="text-slate-400">&bull;</span>
-          <span className="text-slate-400 font-medium">Instruktur: {course.instructor_name}</span>
+            <span className="font-bold uppercase text-[#1D5FAE] dark:text-blue-300 px-2.5 py-0.5 bg-[#DFE9F1] dark:bg-blue-950/60 rounded-full border border-[#B9C8DD] dark:border-blue-900/40">
+              Tingkat {course.level}
+            </span>
+            <span className="text-slate-400">&bull;</span>
+            <span className="text-slate-400 font-medium">Instruktur: {course.instructor_name}</span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">{course.title}</h1>
         <p className="text-xs text-slate-500 dark:text-slate-400 max-w-2xl leading-relaxed">{course.description}</p>
@@ -78,7 +78,7 @@ export default function CourseDetailPage() {
                 type="button"
                 onClick={handleEnroll}
                 disabled={enrollMutation.isPending}
-                className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25 transition"
+                className="w-full py-3 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] text-white font-semibold text-xs shadow-sm transition active:scale-[0.985]"
               >
                 {enrollMutation.isPending ? "Memproses..." : "Daftar & Ikuti Kursus"}
               </button>

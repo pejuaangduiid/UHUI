@@ -29,7 +29,7 @@ export function AdminStatCards({ stats, isLoading }: AdminStatCardsProps) {
       sub: `${stats.suspended_smes} Ditangguhkan`,
       icon: Building2,
       subColor: stats.suspended_smes > 0 ? "text-rose-500" : "text-slate-400",
-      iconBg: "bg-blue-500/10 text-blue-500",
+      iconBg: "bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300",
     },
     {
       label: "Kampanye Bursa",
@@ -37,7 +37,7 @@ export function AdminStatCards({ stats, isLoading }: AdminStatCardsProps) {
       sub: `${stats.suspended_campaigns} Ditangguhkan`,
       icon: TrendingUp,
       subColor: stats.suspended_campaigns > 0 ? "text-rose-500" : "text-slate-400",
-      iconBg: "bg-indigo-500/10 text-indigo-500",
+      iconBg: "bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300",
     },
     {
       label: "Kursus LMS",
@@ -45,7 +45,7 @@ export function AdminStatCards({ stats, isLoading }: AdminStatCardsProps) {
       sub: "Materi & Modul SAK",
       icon: GraduationCap,
       subColor: "text-slate-400",
-      iconBg: "bg-blue-500/10 text-blue-500",
+      iconBg: "bg-[#DFE9F1] text-[#1D5FAE] dark:bg-blue-950/60 dark:text-blue-300",
     },
     {
       label: "Postingan Komunitas",

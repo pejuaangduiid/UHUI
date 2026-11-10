@@ -16,7 +16,7 @@ export function SuspendedUsersTable({ users, onUnsuspend, isLoading }: Suspended
   if (users.length === 0) {
     return (
       <div className="py-12 text-center text-xs text-slate-400 border border-dashed border-slate-200 dark:border-white/10 rounded-2xl bg-white dark:bg-[#121827]">
-        <CheckCircle2 className="h-6 w-6 text-blue-500 mx-auto mb-2 opacity-80" />
+        <CheckCircle2 className="h-6 w-6 text-[#1D5FAE] mx-auto mb-2 opacity-80" />
         <span className="font-semibold block">Tidak ada akun yang sedang ditangguhkan.</span>
         <span>Seluruh pengguna komunitas beroperasi dalam status normal.</span>
       </div>
@@ -66,7 +66,7 @@ export function SuspendedUsersTable({ users, onUnsuspend, isLoading }: Suspended
                     type="button"
                     disabled={isLoading}
                     onClick={() => onUnsuspend(u.id)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition disabled:opacity-50"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#DFE9F1] text-[#1D5FAE] hover:bg-[#c9dbe9] dark:bg-blue-950/60 dark:text-blue-300 dark:hover:bg-blue-900/60 transition disabled:opacity-50"
                   >
                     <ShieldCheck className="h-3.5 w-3.5" />
                     <span>Cabut Sanksi (Unsuspend)</span>

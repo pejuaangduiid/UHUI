@@ -110,9 +110,9 @@ export function LessonStudyView({
             <CheckCircle2 className="h-4 w-4" />
             <span>{isDone ? "✓ Selesai Dipelajari (Klik Batal)" : "Tandai Selesai"}</span>
           </button>
-          <button type="button" onClick={onNextLesson} disabled={!onNextLesson} className="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 transition disabled:opacity-40">
-            Modul Berikutnya <ChevronRight className="h-4 w-4" />
-          </button>
+            <button type="button" onClick={onNextLesson} disabled={!onNextLesson} className="inline-flex items-center gap-1 px-3.5 py-2 rounded-[11px] text-xs font-semibold text-white bg-[#1D5FAE] hover:bg-[#184e91] transition shadow-xs disabled:opacity-40">
+              Modul Berikutnya <ChevronRight className="h-4 w-4" />
+            </button>
         </div>
       </div>
 
@@ -125,8 +125,8 @@ export function LessonStudyView({
               type="button"
               onClick={() => onSelectLesson(l)}
               className={`p-2 rounded-xl text-left text-xs transition flex items-center justify-between border ${l.id === lesson.id
-                  ? "border-blue-500 bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold"
-                  : "border-slate-100 dark:border-white/[0.05] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                ? "border-blue-500 bg-blue-50/80 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold"
+                : "border-slate-100 dark:border-white/[0.05] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
                 }`}
             >
               <span className="truncate pr-2">{i + 1}. {l.title}</span>

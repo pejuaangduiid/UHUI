@@ -32,14 +32,14 @@ export function GroupSectionHeader({
       {activeGroup && !isMember && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 text-xs">
           <div className="flex items-center gap-2.5 text-slate-700 dark:text-slate-300">
-            <Eye className="h-4 w-4 text-blue-500 shrink-0" />
+            <Eye className="h-4 w-4 text-[#1D5FAE] shrink-0" />
             <span>Anda sedang melihat postingan grup ini. Gabung ke grup untuk mulai membuat postingan.</span>
           </div>
           <button
             type="button"
             onClick={onJoinGroup}
             disabled={isJoining}
-            className="px-3.5 py-1.5 rounded-xl font-bold bg-blue-600 text-white hover:bg-blue-500 transition shrink-0 text-xs shadow-sm"
+            className="px-3.5 py-1.5 rounded-[11px] font-semibold bg-[#1D5FAE] hover:bg-[#184e91] text-white transition shrink-0 text-xs shadow-xs"
           >
             {isJoining ? "Bergabung..." : "Gabung Grup"}
           </button>
@@ -59,46 +59,46 @@ export function GroupSectionHeader({
               : "Ruang diskusi interaktif pelaku usaha, mentor SAK EMKM, dan investor."}
           </p>
         </div>
-          {!activeGroup ? (
-        <button
-          type="button"
-          onClick={onToggleCreate}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-500 transition shrink-0"
-        >
-          <PlusCircle className="h-4 w-4" />
-          <span>{isCreating ? "Tutup Form" : "+ Buat Postingan Baru"}</span>
-        </button>
-        ) : isMember ? (
-        <div className="flex items-center gap-2">
-          {onLeaveGroup && (
-            <button
-              type="button"
-              onClick={onLeaveGroup}
-              disabled={isLeaving}
-              className="inline-flex items-center gap-1 rounded-xl border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs font-bold text-rose-500 hover:bg-rose-500/20 transition shrink-0"
-            >
-              <span>{isLeaving ? "Keluar..." : "Keluar Grup"}</span>
-            </button>
-          )}
+        {!activeGroup ? (
           <button
             type="button"
             onClick={onToggleCreate}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-500 transition shrink-0"
+            className="inline-flex items-center gap-1.5 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition shrink-0"
           >
             <PlusCircle className="h-4 w-4" />
             <span>{isCreating ? "Tutup Form" : "+ Buat Postingan Baru"}</span>
           </button>
-        </div>
+        ) : isMember ? (
+          <div className="flex items-center gap-2">
+            {onLeaveGroup && (
+              <button
+                type="button"
+                onClick={onLeaveGroup}
+                disabled={isLeaving}
+                className="inline-flex items-center gap-1 rounded-xl border border-rose-500/20 bg-rose-500/10 px-3 py-2 text-xs font-bold text-rose-500 hover:bg-rose-500/20 transition shrink-0"
+              >
+                <span>{isLeaving ? "Keluar..." : "Keluar Grup"}</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={onToggleCreate}
+              className="inline-flex items-center gap-1.5 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition shrink-0"
+            >
+              <PlusCircle className="h-4 w-4" />
+              <span>{isCreating ? "Tutup Form" : "+ Buat Postingan Baru"}</span>
+            </button>
+          </div>
         ) : (
-        <button
-          type="button"
-          onClick={onJoinGroup}
-          disabled={isJoining}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-500 transition shrink-0"
-        >
-          <Users2 className="h-4 w-4" />
-          <span>{isJoining ? "Bergabung..." : "Gabung ke Grup"}</span>
-        </button>
+          <button
+            type="button"
+            onClick={onJoinGroup}
+            disabled={isJoining}
+            className="inline-flex items-center gap-1.5 rounded-[11px] bg-[#1D5FAE] hover:bg-[#184e91] px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition shrink-0"
+          >
+            <Users2 className="h-4 w-4" />
+            <span>{isJoining ? "Bergabung..." : "Gabung ke Grup"}</span>
+          </button>
         )}
       </div>
     </div>

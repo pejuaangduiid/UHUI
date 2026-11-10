@@ -42,7 +42,7 @@ export function LessonListCard({
 
       {isEnrolled && (
         <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-          <div className="bg-blue-600 h-full rounded-full transition-all duration-300" style={{ width: `${progressPct}%` }} />
+          <div className="bg-[#1D5FAE] h-full rounded-full transition-all duration-300" style={{ width: `${progressPct}%` }} />
         </div>
       )}
 
@@ -55,12 +55,12 @@ export function LessonListCard({
               key={lesson.id}
               type="button"
               onClick={() => onSelectLesson(lesson)}
-              className={`w-full flex items-center justify-between p-3.5 rounded-xl text-left text-xs transition group ${isCurrent ? "bg-blue-50 text-blue-900 dark:bg-blue-950/40 dark:text-blue-200 font-bold" : "hover:bg-slate-50 dark:hover:bg-white/[0.02] text-slate-700 dark:text-slate-300"
+              className={`w-full flex items-center justify-between p-3.5 rounded-xl text-left text-xs transition group ${isCurrent ? "bg-[#DFE9F1]/60 text-[#00478C] dark:bg-blue-950/40 dark:text-blue-200 font-bold" : "hover:bg-slate-50 dark:hover:bg-white/[0.02] text-slate-700 dark:text-slate-300"
                 }`}
             >
               <div className="flex items-center gap-3">
-                <div className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold ${isDone ? "bg-blue-600 text-white" : isCurrent ? "bg-blue-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
-                  }`}>
+                  < div className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold ${isDone ? "bg-[#1D5FAE] text-white" : isCurrent ? "bg-[#1D5FAE] text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"
+                    }`}>
                   {isDone ? <CheckCircle2 className="h-4 w-4" /> : idx + 1}
                 </div>
                 <div>

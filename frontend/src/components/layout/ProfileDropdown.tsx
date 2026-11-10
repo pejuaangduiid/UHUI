@@ -50,10 +50,10 @@ export function ProfileDropdown({
         aria-expanded={isOpen}
         className="flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/80 p-1 pl-1.5 pr-2 shadow-sm transition hover:bg-slate-100 dark:border-white/10 dark:bg-[#121827]/80 dark:hover:bg-slate-800"
       >
-        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-blue-600 to-indigo-600 text-xs font-bold text-white shadow-sm">
-          {user.full_name?.charAt(0).toUpperCase() || "U"}
-        </div>
-        <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1D5FAE] text-xs font-bold text-white shadow-sm">
+            {user.full_name?.charAt(0).toUpperCase() || "U"}
+          </div>
+          <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
@@ -63,19 +63,19 @@ export function ProfileDropdown({
               {user.full_name}
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="rounded bg-blue-100 dark:bg-blue-950 px-1.5 py-0.5 text-[9px] font-semibold text-blue-700 dark:text-blue-300">
-                {roleLabel}
-              </span>
-              <span className="text-[11px] text-slate-400 truncate">
-                {user.email}
-              </span>
+                <span className="rounded bg-[#DFE9F1] dark:bg-blue-950/60 px-1.5 py-0.5 text-[9px] font-semibold text-[#1D5FAE] dark:text-blue-300">
+                  {roleLabel}
+                </span>
+                <span className="text-[11px] text-slate-400 truncate">
+                  {user.email}
+                </span>
             </div>
           </div>
 
           <div className="mx-1 my-1.5 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-white/[0.04]">
             <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
               <span className="flex items-center gap-1 font-medium">
-                <Wallet className="h-3 w-3 text-blue-500" />
+                <Wallet className="h-3 w-3 text-[#1D5FAE]" />
                 Saldo UHUI
               </span>
               <button
@@ -84,7 +84,7 @@ export function ProfileDropdown({
                   setIsOpen(false);
                   setTopUpOpen(true);
                 }}
-                className="text-[10px] font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                className="text-[10px] font-bold text-[#1D5FAE] dark:text-blue-400 hover:underline"
               >
                 + Top Up
               </button>

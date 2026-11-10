@@ -34,7 +34,7 @@ export function EnrolledCoursesSection({ courses, onExplore, basePath = "/sme/ku
           <button
             type="button"
             onClick={onExplore}
-            className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-bold transition shadow-sm text-xs"
+            className="inline-flex items-center gap-1.5 bg-[#1D5FAE] hover:bg-[#184e91] text-white px-4 py-2 rounded-[11px] font-semibold transition shadow-sm text-xs active:scale-[0.985]"
           >
             <span>Jelajahi Katalog Kursus</span>
             <ArrowRight className="h-3.5 w-3.5" />

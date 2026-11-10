@@ -10,22 +10,22 @@ export default function LoginPage() {
 
       <div className="relative z-10 w-full max-w-md space-y-8 rounded-3xl border border-slate-200 bg-white/90 p-8 shadow-xl dark:border-white/[0.08] dark:bg-[#121827]/90 backdrop-blur-md">
         <div className="text-center">
-            <Link href="/" className="inline-flex justify-center mb-1">
-              <Image
-                src="/Logo.jpeg"
-                alt="UHUI Logo"
-                width={160}
-                height={60}
-                className="h-12 w-auto object-contain rounded-xl bg-white px-2 py-1 shadow-xs"
-                priority
-              />
-            </Link>
-            <h1 className="mt-4 text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Masuk ke Akun Anda
-            </h1>
-            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-              Kelola pencatatan kas UMKM dan pantau kesiapan pendanaan usaha.
-            </p>
+          <Link href="/" className="inline-flex justify-center mb-1">
+            <Image
+              src="/Logo.jpeg"
+              alt="UHUI Logo"
+              width={160}
+              height={60}
+              className="h-12 w-auto object-contain rounded-xl bg-white px-2 py-1 shadow-xs"
+              priority
+            />
+          </Link>
+          <h1 className="mt-4 text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Masuk ke Akun Anda
+          </h1>
+          <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+            Kelola pencatatan kas UMKM dan pantau kesiapan pendanaan usaha.
+          </p>
         </div>
 
         <Suspense fallback={<div className="h-48 animate-pulse rounded-xl bg-slate-100 dark:bg-slate-800/60" />}>
@@ -36,7 +36,7 @@ export default function LoginPage() {
           Belum memiliki akun?{" "}
           <Link
             href="/register"
-            className="font-bold text-blue-600 hover:underline dark:text-blue-400"
+            className="font-bold text-[#1D5FAE] hover:underline dark:text-blue-400"
           >
             Daftar Sekarang
           </Link>

@@ -48,16 +48,16 @@ export function SectoralGroups({ selectedGroupSlug, onSelectGroup }: SectoralGro
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-          <Users className="h-3.5 w-3.5 text-blue-500" />
+          <Users className="h-3.5 w-3.5 text-[#1D5FAE]" />
           <span>Grup Komunitas Sektoral UMKM</span>
         </h3>
         <div className="flex items-center gap-2">
           {selectedGroupSlug && (
-            <button type="button" onClick={() => onSelectGroup("")} className="text-[11px] font-semibold text-blue-500 hover:underline">
+            <button type="button" onClick={() => onSelectGroup("")} className="text-[11px] font-semibold text-[#1D5FAE] hover:underline">
               Reset Filter Sektor
             </button>
           )}
-          <button type="button" onClick={() => setModalOpen(true)} className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+          <button type="button" onClick={() => setModalOpen(true)} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#1D5FAE] dark:text-blue-400 hover:underline">
             <Plus className="h-3.5 w-3.5" />
             <span>Buat Grup Baru</span>
           </button>
@@ -72,14 +72,14 @@ export function SectoralGroups({ selectedGroupSlug, onSelectGroup }: SectoralGro
             <div
               key={g.id}
               onClick={() => onSelectGroup(isSelected ? "" : g.slug)}
-              className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between space-y-2 ${isSelected ? "border-blue-500 bg-blue-500/10 shadow-md shadow-blue-500/10" : "border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#121827] hover:border-slate-300"
+              className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between space-y-2 ${isSelected ? "border-[#1D5FAE] bg-[#DFE9F1]/40 shadow-sm" : "border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#121827] hover:border-slate-300"
                 }`}
             >
               <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-xl ${isSelected ? "bg-blue-500 text-white" : "bg-slate-100 dark:bg-slate-800 text-blue-500"}`}>
+                <div className={`p-2 rounded-xl ${isSelected ? "bg-[#1D5FAE] text-white" : "bg-slate-100 dark:bg-slate-800 text-[#1D5FAE]"}`}>
                   <Icon className="h-4 w-4" />
                 </div>
-                {g.is_member && <CheckCircle2 className="h-4 w-4 text-blue-500 shrink-0" />}
+                {g.is_member && <CheckCircle2 className="h-4 w-4 text-[#1D5FAE] shrink-0" />}
               </div>
               <div>
                 <h4 className="font-bold text-xs text-slate-900 dark:text-white line-clamp-1">{g.name}</h4>
@@ -112,7 +112,7 @@ export function SectoralGroups({ selectedGroupSlug, onSelectGroup }: SectoralGro
                 disabled={joinMutation.isPending || leaveMutation.isPending}
                 className={`text-[10px] font-bold px-2.5 py-1 rounded-lg transition ${g.is_member
                   ? "bg-slate-100 text-slate-500 hover:bg-rose-500/10 hover:text-rose-500 dark:bg-slate-800 dark:hover:bg-rose-950/40 dark:hover:text-rose-400"
-                  : "bg-blue-600 hover:bg-blue-500 text-white"
+                  : "bg-[#1D5FAE] hover:bg-[#184e91] text-white shadow-xs"
                   }`}
               >
                 {g.is_member ? "Keluar Grup" : "Gabung"}
@@ -123,23 +123,23 @@ export function SectoralGroups({ selectedGroupSlug, onSelectGroup }: SectoralGro
       </div>
 
       {
-        modalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-            <form onSubmit={handleCreate} className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl dark:border-white/10 dark:bg-[#121827] space-y-3 text-xs">
-              <div className="flex justify-between items-center">
-                <h4 className="font-bold text-sm text-slate-900 dark:text-white">Buat Grup Komunitas Baru</h4>
-                <button type="button" onClick={() => setModalOpen(false)}><X className="h-4 w-4 text-slate-400" /></button>
+            modalOpen && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+                <form onSubmit={handleCreate} className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl dark:border-white/10 dark:bg-[#121827] space-y-3 text-xs">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-sm text-slate-900 dark:text-white">Buat Grup Komunitas Baru</h4>
+                    <button type="button" onClick={() => setModalOpen(false)}><X className="h-4 w-4 text-slate-400" /></button>
+                  </div>
+                  <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Grup (cth: Komunitas Kopi Artisan)" className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
+                  <input type="text" required value={sector} onChange={(e) => setSector(e.target.value)} placeholder="Sektor (cth: Kuliner, Retail, Jasa)" className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
+                  <textarea rows={2} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Deskripsi tujuan grup..." className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
+                    <button type="submit" disabled={createMutation.isPending} className="w-full py-2 bg-[#1D5FAE] text-white rounded-[11px] font-semibold hover:bg-[#184e91] transition shadow-sm">
+                      {createMutation.isPending ? "Menyimpan..." : "Buat Grup"}
+                    </button>
+                </form>
               </div>
-              <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama Grup (cth: Komunitas Kopi Artisan)" className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
-              <input type="text" required value={sector} onChange={(e) => setSector(e.target.value)} placeholder="Sektor (cth: Kuliner, Retail, Jasa)" className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
-              <textarea rows={2} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Deskripsi tujuan grup..." className="w-full rounded-xl border border-slate-200 p-2 dark:border-white/10 dark:bg-slate-800 text-slate-900 dark:text-white" />
-              <button type="submit" disabled={createMutation.isPending} className="w-full py-2 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition">
-                {createMutation.isPending ? "Menyimpan..." : "Buat Grup"}
-              </button>
-            </form>
-          </div>
-        )
-      }
-    </div >
-  );
+            )
+          }
+        </div >
+        );
 }

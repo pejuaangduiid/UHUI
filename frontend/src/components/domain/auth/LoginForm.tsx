@@ -35,17 +35,17 @@ export function LoginForm() {
       return;
     }
 
-      if (data) {
-        queryClient.setQueryData(queryKeys.auth.me(), data);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("uhui_session", JSON.stringify(data));
-        }
+    if (data) {
+      queryClient.setQueryData(queryKeys.auth.me(), data);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("uhui_session", JSON.stringify(data));
       }
+    }
 
-      const role = data?.user?.role;
-      let target = "/sme";
-      if (role === "investor") target = "/invest";
-      else if (role === "admin" || role === "superadmin") target = "/admin";
+    const role = data?.user?.role;
+    let target = "/sme";
+    if (role === "investor") target = "/invest";
+    else if (role === "admin" || role === "superadmin") target = "/admin";
 
     router.push(nextUrl || target);
   };
@@ -76,7 +76,7 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="nama@usaha.id"
-          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+          className="mt-1 block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-[#1D5FAE] focus:outline-none focus:ring-1 focus:ring-[#1D5FAE] dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
         />
       </div>
 
@@ -95,14 +95,14 @@ export function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
-          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+          className="mt-1 block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-[#1D5FAE] focus:outline-none focus:ring-1 focus:ring-[#1D5FAE] dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="flex w-full items-center justify-center rounded-lg bg-zinc-900 py-2.5 text-sm font-semibold text-white transition hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+        className="flex w-full items-center justify-center rounded-xl bg-[#1D5FAE] hover:bg-[#184e91] py-2.5 text-sm font-semibold text-white shadow-xs transition active:scale-[0.985] disabled:opacity-50"
       >
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Masuk"}
       </button>

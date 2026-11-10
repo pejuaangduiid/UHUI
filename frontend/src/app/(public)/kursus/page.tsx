@@ -23,19 +23,6 @@ export default function KursusCatalogPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DFE9F1] dark:bg-blue-950/60 text-[#1D5FAE] dark:text-blue-300 text-xs font-semibold border border-[#B9C8DD] dark:border-blue-900/40">
-          <GraduationCap className="h-4 w-4" />
-          <span>Program Pelatihan &amp; Inkubasi SAK EMKM Kadin</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0F1E2E] dark:text-white">
-          Akademi Bisnis &amp; Literasi Keuangan UMKM
-        </h1>
-        <p className="text-xs sm:text-sm text-[#516072] dark:text-slate-400 leading-relaxed">
-          Tingkatkan kapasitas tata kelola usaha Anda mulai dari webinar berkala hingga kurikulum intensif pembukuan kasir, stok, dan pajak UMKM.
-        </p>
-      </div>
-
       {hasEnrolled && (
         <div className="space-y-4">
           <div className="flex items-center gap-2 border-b border-[#E2E7EB] dark:border-white/[0.08] pb-3">
